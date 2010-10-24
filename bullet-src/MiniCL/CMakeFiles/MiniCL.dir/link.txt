@@ -1,0 +1,2 @@
+/usr/bin/ar cr libMiniCL.a  CMakeFiles/MiniCL.dir/MiniCL.o CMakeFiles/MiniCL.dir/MiniCLTaskScheduler.o CMakeFiles/MiniCL.dir/MiniCLTask/MiniCLTask.o
+/usr/bin/ranlib libMiniCL.a

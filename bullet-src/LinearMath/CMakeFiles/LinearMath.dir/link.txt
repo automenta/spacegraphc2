@@ -1,0 +1,2 @@
+/usr/bin/ar cr libLinearMath.a  CMakeFiles/LinearMath.dir/btAlignedAllocator.o CMakeFiles/LinearMath.dir/btConvexHull.o CMakeFiles/LinearMath.dir/btGeometryUtil.o CMakeFiles/LinearMath.dir/btQuickprof.o CMakeFiles/LinearMath.dir/btSerializer.o
+/usr/bin/ranlib libLinearMath.a

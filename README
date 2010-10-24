@@ -1,0 +1,15 @@
+SpaceGraph-C v2.0
+-----------------
+
+Code:
+	bullet-src/ & bullet-gl/
+		These are exact copies of the Bullet-2.7 physics engine 'src' and 'Demos/OpenGL' directories...
+		...except that the BulletMultiThreaded/GpuSoftBodySolvers directory was removed when it didn't compile as-is under Ubuntu linux.
+		(A more careful cross-platform facility may not require it's removal in the future.)
+
+		The purpose being that when new bullet versions are released, they can be dropped-in.
+
+	src/
+		The SpaceGraph rendering environment and control systems.
+
+	The Makefile was generated from NetBeans 6.9 and the NetBeans project files are included for immediate opening.

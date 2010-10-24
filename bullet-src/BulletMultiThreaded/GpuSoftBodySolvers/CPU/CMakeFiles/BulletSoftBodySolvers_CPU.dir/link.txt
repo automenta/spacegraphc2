@@ -1,0 +1,2 @@
+/usr/bin/ar cr libBulletSoftBodySolvers_CPU.a  CMakeFiles/BulletSoftBodySolvers_CPU.dir/btSoftBodySolver_CPU.o
+/usr/bin/ranlib libBulletSoftBodySolvers_CPU.a
