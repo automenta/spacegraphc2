@@ -1,5 +1,4 @@
-SpaceGraph-C v2.0
------------------
+SpaceGraph-C v2.0		http://automenta.com
 
 Code:
 	bullet-src/ & bullet-gl/
@@ -13,3 +12,52 @@ Code:
 		The SpaceGraph rendering environment and control systems.
 
 	The Makefile was generated from NetBeans 6.9 and the NetBeans project files are included for immediate opening.
+
+TODO:
+	Cell 
+		add(Process* p)
+		remove(Process *p)
+		update(dt)
+
+	CellProcess
+		update(dt)
+		
+	BodyProcess extends CellProcess
+		Vector3f color
+		String name
+		update(dt)
+		onTouched(world, normal)
+		onPressed(world, normal, pressed?)
+		onDragged(...)
+		onDrawn(gl)
+		getActionButtons()
+
+	BrainProcess extends CellProcess
+		getSize()
+		BrainInterface alloc(key, unsigned inputs, unsigned outputs)
+		addNeuron(Neuron n, vector<Neuron> inputs, vector<Neuron> outputs)
+		getRandomNeuron(float probabilityInput, floatProbabilityOutput, float 
+		update(dt)
+		~Brain()
+			unalloc(key)?
+
+	Neuron extends CellProcess
+
+	InputNeuron extends Neuron
+
+	OutputNeuron extends Neuron
+
+	IzhikevichNeuron extends Neuron
+		[ map all of CritterDrug's neural modulators to this class's activity ]
+
+	BrainInput extends CellProcess
+		a vector of InputNeurons
+
+	BrainOutput extends CellProcess
+		a vector of OutputNeurons
+
+	BrainMap(unsigned inputs, unsigned outputs) extends CellProcess
+		instantiates 2 inputs and 2 outputs and directly propagates signals across. used to link 2 brains
+
+		update()
+
