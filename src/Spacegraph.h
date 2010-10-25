@@ -19,10 +19,17 @@ Written by: Marten Svanfeldt
 #ifndef RAGDOLLDEMO_H
 #define RAGDOLLDEMO_H
 
+#include <map>
+using namespace std;
+
+#include "btBulletDynamicsCommon.h"
+
 #include "GlutDemoApplication.h"
 #include "LinearMath/btAlignedObjectArray.h"
 
 #include "Renderer.h"
+
+#include "BodyProcess.h"
 
 class btBroadphaseInterface;
 class btCollisionShape;
@@ -50,6 +57,8 @@ class Spacegraph : public GlutDemoApplication
 
 	btDefaultCollisionConfiguration* m_collisionConfiguration;
 
+        map<btRigidBody*, BodyProcess*>* bodyProcess;
+        
         float rotationMomentum, distMomentum;
         float nextEle;
         float nextAzi;
@@ -61,11 +70,20 @@ public:
         Spacegraph() : GlutDemoApplication() {
             renderer = new Renderer();
             m_shapeDrawer = renderer;
+            bodyProcess = new map<btRigidBody*, BodyProcess*>();
 
             m_frustumZNear = 0.5f;
             rotationMomentum = 0.95f;
             distMomentum = 0.95f;
             minDist = 0.1f;
+        }
+
+        void setBodyProcess(btRigidBody* body, BodyProcess* process) {
+            (*bodyProcess)[body] = process;
+        }        
+        
+        void removeBodyProcess(btRigidBody* body) {
+            bodyProcess->erase(body);
         }
 
         btDynamicsWorld* getSpace() {

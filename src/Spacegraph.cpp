@@ -28,7 +28,7 @@ Written by: Marten Svanfeldt
 #include "Spacegraph.h"
 #include "Cell.h"
 
-#include "Humanoid.h" //TODO this is temporary
+#include "BodyProcess.h"
 
 static bool use6Dof = false;
 
@@ -102,10 +102,6 @@ void Spacegraph::addCell(Cell *c) {
     cells.push_back(c);
 }
 
-void Spacegraph::spawnRagdoll(const btVector3& startOffset) {
-    Cell* ragDoll = new Humanoid(this, startOffset);
-    addCell(ragDoll);
-}
 
 void Spacegraph::clientMoveAndDisplay() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -233,12 +229,12 @@ void Spacegraph::displayCallback() {
 
 void Spacegraph::keyboardCallback(unsigned char key, int x, int y) {
     switch (key) {
-        case 'e':
-        {
-            btVector3 startOffset(0, 2, 0);
-            spawnRagdoll(startOffset);
-            break;
-        }
+//        case 'e':
+//        {
+//            btVector3 startOffset(0, 2, 0);
+//            spawnRagdoll(startOffset);
+//            break;
+//        }
         default:
             DemoApplication::keyboardCallback(key, x, y);
     }
@@ -641,15 +637,20 @@ void Spacegraph::renderscene(int pass) {
         //		m_dynamicsWorld->getDebugDrawer()->drawAabb(aabbMin,aabbMax,btVector3(1,1,1));
 
 
-        const btVector3 defaultColor = btVector3(0.5, 0.5, 0.5);
+        const btVector3 defaultColor(0.5, 0.5, 0.5);
 
+        BodyProcess *process = NULL;
+        if (body!=NULL) {
+            process = (*bodyProcess)[body];
+        }
+        
         if (!(getDebugMode() & btIDebugDraw::DBG_DrawWireframe)) {
             switch (pass) {
-                case 0: renderer->drawOpenGLx(m, colObj->getCollisionShape(), defaultColor, getDebugMode(), aabbMin, aabbMax, NULL);
+                case 0: renderer->drawOpenGLx(m, colObj->getCollisionShape(), defaultColor, getDebugMode(), aabbMin, aabbMax, process);
                     break;
                 case 1: renderer->drawShadow(m, m_sundirection*rot, colObj->getCollisionShape(), aabbMin, aabbMax);
                     break;
-                case 2: renderer->drawOpenGLx(m, colObj->getCollisionShape(), defaultColor * btScalar(0.3), 0, aabbMin, aabbMax, NULL);
+                case 2: renderer->drawOpenGLx(m, colObj->getCollisionShape(), defaultColor * btScalar(0.3), 0, aabbMin, aabbMax, process);
                     break;
             }
         }
@@ -712,46 +713,46 @@ void Spacegraph::renderme()
 			renderscene(0);
 		}
 
-		int	xOffset = 10;
-		int yStart = 20;
-		int yIncr = 20;
+//		int	xOffset = 10;
+//		int yStart = 20;
+//		int yIncr = 20;
+//
+//
+//		glDisable(GL_LIGHTING);
+//		glColor3f(0, 0, 0);
 
-
-		glDisable(GL_LIGHTING);
-		glColor3f(0, 0, 0);
-
-		if ((m_debugMode & btIDebugDraw::DBG_NoHelpText)==0)
-		{
-			setOrthographicProjection();
-
-			showProfileInfo(xOffset,yStart,yIncr);
-
-#ifdef USE_QUICKPROF
-
-
-			if ( getDebugMode() & btIDebugDraw::DBG_ProfileTimings)
-			{
-				static int counter = 0;
-				counter++;
-				std::map<std::string, hidden::ProfileBlock*>::iterator iter;
-				for (iter = btProfiler::mProfileBlocks.begin(); iter != btProfiler::mProfileBlocks.end(); ++iter)
-				{
-					char blockTime[128];
-					sprintf(blockTime, "%s: %lf",&((*iter).first[0]),btProfiler::getBlockTime((*iter).first, btProfiler::BLOCK_CYCLE_SECONDS));//BLOCK_TOTAL_PERCENT));
-					glRasterPos3f(xOffset,yStart,0);
-					GLDebugDrawString(BMF_GetFont(BMF_kHelvetica10),blockTime);
-					yStart += yIncr;
-
-				}
-
-			}
-#endif //USE_QUICKPROF
-
-
-
-
-			resetPerspectiveProjection();
-		}
+//		if ((m_debugMode & btIDebugDraw::DBG_NoHelpText)==0)
+//		{
+//			setOrthographicProjection();
+//
+//			showProfileInfo(xOffset,yStart,yIncr);
+//
+//#ifdef USE_QUICKPROF
+//
+//
+//			if ( getDebugMode() & btIDebugDraw::DBG_ProfileTimings)
+//			{
+//				static int counter = 0;
+//				counter++;
+//				std::map<std::string, hidden::ProfileBlock*>::iterator iter;
+//				for (iter = btProfiler::mProfileBlocks.begin(); iter != btProfiler::mProfileBlocks.end(); ++iter)
+//				{
+//					char blockTime[128];
+//					sprintf(blockTime, "%s: %lf",&((*iter).first[0]),btProfiler::getBlockTime((*iter).first, btProfiler::BLOCK_CYCLE_SECONDS));//BLOCK_TOTAL_PERCENT));
+//					glRasterPos3f(xOffset,yStart,0);
+//					GLDebugDrawString(BMF_GetFont(BMF_kHelvetica10),blockTime);
+//					yStart += yIncr;
+//
+//				}
+//
+//			}
+//#endif //USE_QUICKPROF
+//
+//
+//
+//
+//			resetPerspectiveProjection();
+//		}
 
 		glEnable(GL_LIGHTING);
 

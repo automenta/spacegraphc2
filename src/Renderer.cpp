@@ -90,9 +90,15 @@ public:
 	}
 };
 
-void Renderer::drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btVector3& color,int	debugMode,const btVector3& worldBoundsMin,const btVector3& worldBoundsMax, int* cell)
+void Renderer::drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btVector3& defaultColor,int	debugMode,const btVector3& worldBoundsMin,const btVector3& worldBoundsMax, BodyProcess* process)
 {
 
+    btVector3 color(defaultColor);
+    if (process!=NULL) {
+        color = process->color;
+    }
+
+    
 	if (shape->getShapeType() == CUSTOM_CONVEX_SHAPE_TYPE)
 	{
 		btVector3 org(m[12], m[13], m[14]);
@@ -165,7 +171,7 @@ void Renderer::drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btV
 			{0,0,scalingFactor,0},
 			{0,0,0,1}};
 
-			drawOpenGLx( (btScalar*)tmpScaling,convexShape,color,debugMode,worldBoundsMin,worldBoundsMax,cell);
+			drawOpenGLx( (btScalar*)tmpScaling,convexShape,color,debugMode,worldBoundsMin,worldBoundsMax, process);
 		}
 		glPopMatrix();
 		return;
@@ -180,7 +186,7 @@ void Renderer::drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btV
 			const btCollisionShape* colShape = compoundShape->getChildShape(i);
 			btScalar childMat[16];
 			childTrans.getOpenGLMatrix(childMat);
-			drawOpenGLx(childMat,colShape,color,debugMode,worldBoundsMin,worldBoundsMax,cell);
+			drawOpenGLx(childMat,colShape,color,debugMode,worldBoundsMin,worldBoundsMax, process);
 		}
 
 	} else
@@ -410,7 +416,7 @@ void Renderer::drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btV
 					childTransform.setOrigin(multiSphereShape->getSpherePosition(i));
 					btScalar childMat[16];
 					childTransform.getOpenGLMatrix(childMat);
-					drawOpenGLx(childMat,&sc,color,debugMode,worldBoundsMin,worldBoundsMax,cell);
+					drawOpenGLx(childMat,&sc,color,debugMode,worldBoundsMin,worldBoundsMax, process);
 				}
 
 				break;

@@ -10,9 +10,11 @@
 
 #include "GL_ShapeDrawer.h"
 
+#include "BodyProcess.h"
+
 class Renderer : public GL_ShapeDrawer {
 public:
-    void drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btVector3& color, int debugMode,const btVector3& worldBoundsMin,const btVector3& worldBoundsMax, int* unused);
+    void drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btVector3& color, int debugMode,const btVector3& worldBoundsMin,const btVector3& worldBoundsMax, BodyProcess* process);
     
 };
 

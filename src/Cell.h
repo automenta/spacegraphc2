@@ -9,6 +9,7 @@
 #define	CELL_H
 
 #include "Spacegraph.h"
+#include "BodyProcess.h"
 #include "btBulletDynamicsCommon.h"
 
 
@@ -16,8 +17,27 @@ class Cell
 {
 
 public:
+	btDynamicsWorld* m_ownerWorld;
+        Spacegraph* spacegraph;
 
-	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape)
+
+
+        Cell (Spacegraph* s)		
+	{
+            spacegraph = s;
+            m_ownerWorld = s->getSpace();
+
+	}
+	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape) {
+            return addNewBody(mass, startTransform, shape, 0.5, 0.5, 0.5);
+        }
+
+	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, float r, float g, float b) {
+            return addNewBody(mass, startTransform, shape, new BodyProcess(r, g, b));
+        }
+
+
+	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, BodyProcess* process)
 	{
 		bool isDynamic = (mass != 0.f);
 
@@ -31,19 +51,15 @@ public:
 		btRigidBody* body = new btRigidBody(rbInfo);
 
 		m_ownerWorld->addRigidBody(body);
+                spacegraph->setBodyProcess(body, process);
 
 		return body;
 	}
 
-	btDynamicsWorld* m_ownerWorld;
-
-        Cell (Spacegraph* s)
-		
-	{
-            m_ownerWorld = s->getSpace();
-
-	}
-
+        void removeBody(btRigidBody* body) {
+            m_ownerWorld->removeRigidBody(body);
+            spacegraph->removeBodyProcess(body);
+        }
 };
 
 

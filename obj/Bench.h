@@ -13,7 +13,7 @@
 class Bench : public Cell {
 public:
     
-    Bench (Spacegraph* s, const btVector3& positionOffset) : Cell(s)
+    Bench (Spacegraph* s, const btVector3& positionOffset /* length, width, height, ... */) : Cell(s)
     {
         btTransform offset; offset.setIdentity();
 	offset.setOrigin(positionOffset);
