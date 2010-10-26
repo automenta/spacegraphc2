@@ -20,6 +20,8 @@ public:
         color.setZ(b);
     }
 
+    virtual void update(double dt) {    }
+    virtual void draw() {    }
 };
 
 #endif	/* BODYSTATE_H */

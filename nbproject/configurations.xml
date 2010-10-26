@@ -807,11 +807,31 @@
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
     </logicalFolder>
+    <logicalFolder name="neural" displayName="neural" projectFiles="true">
+      <logicalFolder name="neural" displayName="neural" projectFiles="true">
+      </logicalFolder>
+      <itemPath>neural/Brain.cpp</itemPath>
+      <itemPath>neural/Brain.h</itemPath>
+      <itemPath>neural/BrainLink.cpp</itemPath>
+      <itemPath>neural/BrainLink.h</itemPath>
+      <itemPath>neural/Math.cpp</itemPath>
+      <itemPath>neural/Math.h</itemPath>
+      <itemPath>neural/NInput.cpp</itemPath>
+      <itemPath>neural/NInput.h</itemPath>
+      <itemPath>neural/NOutput.cpp</itemPath>
+      <itemPath>neural/NOutput.h</itemPath>
+      <itemPath>neural/Neuron.cpp</itemPath>
+      <itemPath>neural/Neuron.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="obj" displayName="obj" projectFiles="true">
       <itemPath>obj/Bench.cpp</itemPath>
       <itemPath>obj/Bench.h</itemPath>
+      <itemPath>obj/BrainSpace.cpp</itemPath>
+      <itemPath>obj/BrainSpace.h</itemPath>
       <itemPath>obj/Humanoid.cpp</itemPath>
       <itemPath>obj/Humanoid.h</itemPath>
+      <itemPath>obj/Snake.cpp</itemPath>
+      <itemPath>obj/Snake.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -826,13 +846,17 @@
     </logicalFolder>
     <logicalFolder name="src" displayName="src" projectFiles="true">
       <logicalFolder name="src" displayName="src" projectFiles="true">
-        <itemPath>src/Cell.cpp</itemPath>
-        <itemPath>src/Cell.h</itemPath>
-        <itemPath>src/Renderer.cpp</itemPath>
-        <itemPath>src/Renderer.h</itemPath>
-        <itemPath>src/Spacegraph.cpp</itemPath>
-        <itemPath>src/Spacegraph.h</itemPath>
       </logicalFolder>
+      <itemPath>src/BodyProcess.cpp</itemPath>
+      <itemPath>src/BodyProcess.h</itemPath>
+      <itemPath>src/Cell.cpp</itemPath>
+      <itemPath>src/Cell.h</itemPath>
+      <itemPath>src/CellProcess.cpp</itemPath>
+      <itemPath>src/CellProcess.h</itemPath>
+      <itemPath>src/Renderer.cpp</itemPath>
+      <itemPath>src/Renderer.h</itemPath>
+      <itemPath>src/Spacegraph.cpp</itemPath>
+      <itemPath>src/Spacegraph.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -845,12 +869,14 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>README</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>bullet-gl</Elem>
     <Elem>bullet-src</Elem>
     <Elem>src</Elem>
     <Elem>obj</Elem>
+    <Elem>neural</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -867,6 +893,7 @@
             <pElem>bullet-src</pElem>
             <pElem>src</pElem>
             <pElem>obj</pElem>
+            <pElem>neural</pElem>
           </incDir>
           <commandLine>-fopenmp</commandLine>
         </ccTool>

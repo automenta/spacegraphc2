@@ -33,6 +33,7 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/neural/Neuron.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btUnionFind.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.o \
 	${OBJECTDIR}/bullet-src/BulletDynamics/ConstraintSolver/btHinge2Constraint.o \
@@ -65,6 +66,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-gl/RenderTexture.o \
 	${OBJECTDIR}/bullet-gl/Win32DemoApplication.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btCollisionDispatcher.o \
+	${OBJECTDIR}/neural/NOutput.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btCapsuleShape.o \
@@ -96,6 +98,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btBroadphaseProxy.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btCompoundShape.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGImpactQuantizedBvh.o \
+	${OBJECTDIR}/src/CellProcess.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btAxisSweep3.o \
 	${OBJECTDIR}/bullet-gl/GL_DialogWindow.o \
 	${OBJECTDIR}/bullet-src/BulletSoftBody/btSoftRigidCollisionAlgorithm.o \
@@ -110,6 +113,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-src/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/NarrowPhaseCollision/btGjkEpa2.o \
 	${OBJECTDIR}/bullet-src/LinearMath/btQuickprof.o \
+	${OBJECTDIR}/neural/BrainLink.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.o \
 	${OBJECTDIR}/bullet-src/BulletDynamics/Dynamics/btRigidBody.o \
 	${OBJECTDIR}/bullet-src/BulletDynamics/ConstraintSolver/btSolve2LinearConstraint.o \
@@ -125,6 +129,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btQuantizedBvh.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGenericPoolAllocator.o \
+	${OBJECTDIR}/neural/Math.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/NarrowPhaseCollision/btRaycastCallback.o \
 	${OBJECTDIR}/bullet-src/BulletDynamics/Vehicle/btWheelInfo.o \
@@ -138,9 +143,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btConvexPointCloudShape.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/Win32ThreadSupport.o \
+	${OBJECTDIR}/obj/BrainSpace.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btMultiSphereShape.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuGatheringCollisionDispatcher.o \
+	${OBJECTDIR}/src/BodyProcess.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btDispatcher.o \
+	${OBJECTDIR}/neural/NInput.o \
 	${OBJECTDIR}/bullet-src/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.o \
 	${OBJECTDIR}/bullet-src/BulletSoftBody/btSoftBody.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/btThreadSupportInterface.o \
@@ -161,6 +169,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btDbvt.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btMinkowskiSumShape.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.o \
+	${OBJECTDIR}/neural/Brain.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/btGpu3DGridBroadphase.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btTetrahedronShape.o \
@@ -194,6 +203,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-src/BulletDynamics/Dynamics/Bullet-C-API.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuCollisionObjectWrapper.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuFakeDma.o \
+	${OBJECTDIR}/obj/Snake.o \
 	${OBJECTDIR}/bullet-src/BulletSoftBody/btSoftSoftCollisionAlgorithm.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.o
 
@@ -221,6 +231,11 @@ LDLIBSOPTIONS=
 dist/Release/GNU-Linux-x86/spacegraphc: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/GNU-Linux-x86
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spacegraphc ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/neural/Neuron.o: neural/Neuron.cpp 
+	${MKDIR} -p ${OBJECTDIR}/neural
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/neural/Neuron.o neural/Neuron.cpp
 
 ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btUnionFind.o: bullet-src/BulletCollision/CollisionDispatch/btUnionFind.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch
@@ -382,6 +397,11 @@ ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btCollisionDispatcher.
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btCollisionDispatcher.o bullet-src/BulletCollision/CollisionDispatch/btCollisionDispatcher.cpp
 
+${OBJECTDIR}/neural/NOutput.o: neural/NOutput.cpp 
+	${MKDIR} -p ${OBJECTDIR}/neural
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/neural/NOutput.o neural/NOutput.cpp
+
 ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.o: bullet-src/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch
 	${RM} $@.d
@@ -537,6 +557,11 @@ ${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGImpactQuantizedBvh.o: bullet-
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGImpactQuantizedBvh.o bullet-src/BulletCollision/Gimpact/btGImpactQuantizedBvh.cpp
 
+${OBJECTDIR}/src/CellProcess.o: src/CellProcess.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CellProcess.o src/CellProcess.cpp
+
 ${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btAxisSweep3.o: bullet-src/BulletCollision/BroadphaseCollision/btAxisSweep3.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision
 	${RM} $@.d
@@ -606,6 +631,11 @@ ${OBJECTDIR}/bullet-src/LinearMath/btQuickprof.o: bullet-src/LinearMath/btQuickp
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/LinearMath
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/LinearMath/btQuickprof.o bullet-src/LinearMath/btQuickprof.cpp
+
+${OBJECTDIR}/neural/BrainLink.o: neural/BrainLink.cpp 
+	${MKDIR} -p ${OBJECTDIR}/neural
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/neural/BrainLink.o neural/BrainLink.cpp
 
 ${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.o: bullet-src/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes
@@ -682,6 +712,11 @@ ${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGenericPoolAllocator.o: bullet
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGenericPoolAllocator.o bullet-src/BulletCollision/Gimpact/btGenericPoolAllocator.cpp
 
+${OBJECTDIR}/neural/Math.o: neural/Math.cpp 
+	${MKDIR} -p ${OBJECTDIR}/neural
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/neural/Math.o neural/Math.cpp
+
 ${OBJECTDIR}/bullet-src/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.o: bullet-src/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/NarrowPhaseCollision
 	${RM} $@.d
@@ -747,6 +782,11 @@ ${OBJECTDIR}/bullet-src/BulletMultiThreaded/Win32ThreadSupport.o: bullet-src/Bul
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletMultiThreaded/Win32ThreadSupport.o bullet-src/BulletMultiThreaded/Win32ThreadSupport.cpp
 
+${OBJECTDIR}/obj/BrainSpace.o: obj/BrainSpace.cpp 
+	${MKDIR} -p ${OBJECTDIR}/obj
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/obj/BrainSpace.o obj/BrainSpace.cpp
+
 ${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btMultiSphereShape.o: bullet-src/BulletCollision/CollisionShapes/btMultiSphereShape.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes
 	${RM} $@.d
@@ -757,10 +797,20 @@ ${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuGatheringCollisionDispatcher.o: b
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuGatheringCollisionDispatcher.o bullet-src/BulletMultiThreaded/SpuGatheringCollisionDispatcher.cpp
 
+${OBJECTDIR}/src/BodyProcess.o: src/BodyProcess.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/BodyProcess.o src/BodyProcess.cpp
+
 ${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btDispatcher.o: bullet-src/BulletCollision/BroadphaseCollision/btDispatcher.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletCollision/BroadphaseCollision/btDispatcher.o bullet-src/BulletCollision/BroadphaseCollision/btDispatcher.cpp
+
+${OBJECTDIR}/neural/NInput.o: neural/NInput.cpp 
+	${MKDIR} -p ${OBJECTDIR}/neural
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/neural/NInput.o neural/NInput.cpp
 
 ${OBJECTDIR}/bullet-src/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.o: bullet-src/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletDynamics/ConstraintSolver
@@ -861,6 +911,11 @@ ${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.o: b
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/Gimpact
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.o bullet-src/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp
+
+${OBJECTDIR}/neural/Brain.o: neural/Brain.cpp 
+	${MKDIR} -p ${OBJECTDIR}/neural
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/neural/Brain.o neural/Brain.cpp
 
 ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.o: bullet-src/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch
@@ -1026,6 +1081,11 @@ ${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuFakeDma.o: bullet-src/BulletMulti
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletMultiThreaded
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuFakeDma.o bullet-src/BulletMultiThreaded/SpuFakeDma.cpp
+
+${OBJECTDIR}/obj/Snake.o: obj/Snake.cpp 
+	${MKDIR} -p ${OBJECTDIR}/obj
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/obj/Snake.o obj/Snake.cpp
 
 ${OBJECTDIR}/bullet-src/BulletSoftBody/btSoftSoftCollisionAlgorithm.o: bullet-src/BulletSoftBody/btSoftSoftCollisionAlgorithm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletSoftBody

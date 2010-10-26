@@ -15,6 +15,7 @@
                 <sourceRootElem>bullet-src</sourceRootElem>
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>obj</sourceRootElem>
+                <sourceRootElem>neural</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>Debug</confElem>

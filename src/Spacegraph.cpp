@@ -68,8 +68,18 @@ void Spacegraph::initPhysics() {
     //m_dynamicsWorld->getDispatchInfo().m_useConvexConservativeDistanceUtil = true;
     //m_dynamicsWorld->getDispatchInfo().m_convexConservativeDistanceThreshold = 0.01f;
 
+    getSpace()->setGravity(btVector3(0,0,0));
 
 
+    clientResetScene();
+
+    nextEle = m_ele;
+    nextAzi = m_azi;
+    nextDist = m_cameraDistance;
+
+}
+
+void Spacegraph::addGround() {
     // Setup a big ground box
     {
         btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(200.), btScalar(10.), btScalar(200.)));
@@ -90,12 +100,6 @@ void Spacegraph::initPhysics() {
 
     }
 
-    clientResetScene();
-
-    nextEle = m_ele;
-    nextAzi = m_azi;
-    nextDist = m_cameraDistance;
-
 }
 
 void Spacegraph::addCell(Cell *c) {
@@ -113,13 +117,17 @@ void Spacegraph::clientMoveAndDisplay() {
     if (ms > minFPS)
         ms = minFPS;
 
+    double dt = ms / 1000000.f;
     if (m_dynamicsWorld) {
-        m_dynamicsWorld->stepSimulation(ms / 1000000.f);
+        m_dynamicsWorld->stepSimulation(dt);
 
         //optional but useful: debug drawing
         m_dynamicsWorld->debugDrawWorld();
 
+    }
 
+    for (unsigned i = 0; i < cells.size(); i++) {
+        cells[i]->update(dt);
     }
 
     renderme();

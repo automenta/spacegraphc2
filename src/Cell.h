@@ -8,6 +8,9 @@
 #ifndef CELL_H
 #define	CELL_H
 
+#include <list>
+using namespace std;
+
 #include "Spacegraph.h"
 #include "BodyProcess.h"
 #include "btBulletDynamicsCommon.h"
@@ -17,17 +20,18 @@ class Cell
 {
 
 public:
+        list<BodyProcess*>* processes;
 	btDynamicsWorld* m_ownerWorld;
         Spacegraph* spacegraph;
-
-
 
         Cell (Spacegraph* s)		
 	{
             spacegraph = s;
             m_ownerWorld = s->getSpace();
+            processes = new list<BodyProcess*>();
 
 	}
+        
 	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape) {
             return addNewBody(mass, startTransform, shape, 0.5, 0.5, 0.5);
         }
@@ -53,12 +57,29 @@ public:
 		m_ownerWorld->addRigidBody(body);
                 spacegraph->setBodyProcess(body, process);
 
+                processes->push_back(process);
+
 		return body;
 	}
 
         void removeBody(btRigidBody* body) {
             m_ownerWorld->removeRigidBody(body);
+
+            BodyProcess* process = spacegraph->getProcess(body);
+            if (process!=NULL) {
+                processes->remove(process);
+            }
+            
             spacegraph->removeBodyProcess(body);
+        }
+
+        void update(double dt) {
+            list<BodyProcess*>::iterator p = processes->begin();
+            while(p != processes->end()){
+                (*p)->update(dt);
+                p++;
+            }
+
         }
 };
 

@@ -86,6 +86,10 @@ public:
             bodyProcess->erase(body);
         }
 
+        BodyProcess* getProcess(btRigidBody* body) {
+            return (*bodyProcess)[body];
+        }
+
         btDynamicsWorld* getSpace() {
             return m_dynamicsWorld;
         }
@@ -120,7 +124,9 @@ public:
         
         virtual void renderscene(int pass);
         
-	static DemoApplication* Create()
+        virtual void addGround();
+
+        static DemoApplication* Create()
 	{
 		Spacegraph* demo = new Spacegraph();
 		demo->myinit();
