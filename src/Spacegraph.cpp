@@ -663,6 +663,7 @@ void Spacegraph::renderscene(int pass) {
             }
         }
     }
+
 }
 
 void Spacegraph::renderme()
@@ -767,7 +768,10 @@ void Spacegraph::renderme()
 
 	}
 
-	updateCamera();
+    for (unsigned i = 0; i < cells.size(); i++) {
+        cells[i]->draw();
+    }
+	//updateCamera();
 
 }
 

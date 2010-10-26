@@ -21,24 +21,24 @@ void Brain::update(float dt) {
         inValues[i] = ins[i]->getInput();
     }
 
-    vector<Neuron*> nv;
-    vector<list<Synapse*>* > sv;
-    nv.reserve(neurons.size());
-    sv.reserve(neurons.size());
+//    vector<Neuron*> nv;
+//    vector<list<Synapse*>* > sv;
+//    nv.reserve(neurons.size());
+//    sv.reserve(neurons.size());
 
     for (map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (im != neurons.end()); im++) {
-        nv.push_back(im->first);
-        sv.push_back(im->second);
-    }
+        //nv.push_back(im->first);
+        //sv.push_back(im->second);
+    //}
 
 
     
-    #pragma omp parallel for
-    for (unsigned j = 0; j < nv.size(); j++) {
+    //#pragma omp parallel for
+    //for (unsigned j = 0; j < nv.size(); j++) {
         //cout << omp_in_parallel() << " " << omp_get_dynamic() <<" " << omp_get_thread_num() << " of " << omp_get_num_threads() << "\n";
 
-        Neuron* n = nv[j];
-        learnedTotal += n->forward(dt, sv[j]);
+        Neuron* n = im->first; //nv[j];
+        learnedTotal += n->forward(dt, im->second);
 
         // if neuron fires
         if (n->nextOutput != 0) {
@@ -64,6 +64,6 @@ void Brain::update(float dt) {
         outValues[i] = outs[i]->getOutput();
     }
 
-    nv.clear();
-    sv.clear();
+    //nv.clear();
+    //sv.clear();
 }

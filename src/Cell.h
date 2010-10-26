@@ -79,8 +79,9 @@ public:
                 (*p)->update(dt);
                 p++;
             }
-
         }
+
+        virtual void draw() { }
 };
 
 

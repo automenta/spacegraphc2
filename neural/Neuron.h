@@ -81,6 +81,7 @@ public:
 
     OutNeuron() {
         AbstractNeuron();
+        potential = 0;
         stimulationFactor = 0.1;
         potentialDecay = 0.99;
     }

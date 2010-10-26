@@ -153,132 +153,105 @@ public:
         float minFiringThreshold = 0.01;
         float maxFiringThreshold = 0.9999;
 
-        // determine number of neurons this brain will start with
-        //int numNeurons = (int) Math.round(Maths.random(minNeuronsAtBuildtime, maxNeuronsAtBuildtime));
-
-
-        // create the architectural neurons
-//        for (unsigned i = 0; i < numNeurons; i++) {
-//            NeuronBuilder *nb = newRandomNeuronBuilder();
-//            neuronBuilders.push_back(nb);
-//
-//        }
-
-        // clear everything
-        //neuron.clear();
-        //sense.clear();
-        //motor.clear();
-
-        // we know the amount of neurons already, reset totalsynapses for the count later
-
-
-
-        // create all runtime neurons
-        /*for (unsigned i = 0; i < numNeurons; i++)*/
-        {
-            //Neuron* t = new CritterdingNeuron();
-            Neuron* t = new IzhikevichNeuron();
+        Neuron* t = new CritterdingNeuron();
+        //Neuron* t = new IzhikevichNeuron();
 
             // is it inhibitory ?
-            if (frand(0, 1) <= percentInhibitoryNeuron) {
-                t->isInhibitory = true;
-            }// if not, is it motor ?
-            else {
-                t->isInhibitory = false;
-            }
-
-            if (frand(0, 1) <= percentOutputNeuron) {
-                OutNeuron* mn = getRandomOutNeuron();
-
-                // check if motor already used
-                //            bool proceed = true;
-                //            for (NeuronBuilder nb : neuronBuilders) {
-                //                if (nb.motor == mn) {
-                //                    proceed = false;
-                //                    break;
-                //                }
-                //            }
-
-                //if (proceed) {
-
-                //Allows a motor neuron to receive multiple inputs
-                t->target = mn;
-                //}
-            }
-            else {
-                t->target = NULL;
-            }
-
-            // does it have synaptic plasticity ?
-            if (frand(0, 1) <= percentChancePlasticNeuron) {
-                t->isPlastic = true;
-                t->plasticityStrengthen = frand(minPlasticityStrengthen, maxPlasticityStrengthen);
-                t->plasticityWeaken = frand(minPlasticityWeaken, maxPlasticityWeaken);
-            } else {
-                t->isPlastic = false;
-                t->plasticityStrengthen = (minPlasticityStrengthen + maxPlasticityStrengthen)/2.0;
-                t->plasticityWeaken = (minPlasticityWeaken + maxPlasticityWeaken) / 2.0;
-            }
-
-            // does it have consistent synapses ?
-            if (frand(0, 1) <= percentChanceConsistentSynapses) {
-                t->hasConsistentSynapses = true;
-
-                // if so, does it have inhibitory synapses ?
-                if (frand(0, 1) <= percentInhibitorySynapse) {
-                    t->hasInhibitorySynapses = true;
-                }
-            }
-
-            // determine firing threshold
-            if (t->target != NULL) {
-                t->firingThreshold = maxFiringThreshold;
-                //an->maxDendridicBranches = maxDendridicBranches;
-            } else {
-                t->firingThreshold = frand(minFiringThreshold, maxFiringThreshold);
-                //an->maxDendridicBranches = irand(1, maxDendridicBranches);
-            }
-
-            //maximum that a synapse can multiply a signal. 1.0 = conserved
-            t->maxSynapseWeight = maxSynapseWeight;    //ex: 1.0
-            t->minSynapseWeight = minSynapseWeight;    //ex: 0.1
-
-            t->potentialDecay = neuronPotentialDecay; //ex: 0.995;
-
-            addNeuron(t);
-
-            // determine amount of synapses this neuron will start with
-            int numSynapses = irand(minSynapsesPerNeuron, maxSynapsesPerNeuron);
-
-            bool isSensorNeuron;
-            // create the architectural neurons
-            for (int j = 0; j < numSynapses; j++) {
-                AbstractNeuron* inNeuron;
-                if (frand(0, 1) <= percentInputSynapse || neurons.size() < 2) {
-                    isSensorNeuron = true;
-                    inNeuron = getRandomInNeuron();
-                }
-                else {
-                    isSensorNeuron = false;
-                    inNeuron = getRandomInterNeuron();
-                }
-                
-                float weight;
-                if (t->hasConsistentSynapses) {
-                    weight = (t->hasInhibitorySynapses) ? -1.0 : 1.0;
-                } else {
-                    float percentChanceInhibitorySynapses = 0.5f;
-                    weight = (frand(0, 1) <= percentChanceInhibitorySynapses) ? -1.0 : 1.0;
-                }
-
-
-                Synapse* s = new Synapse(inNeuron, weight);
-                addSynapse(s, t);
-                totalSynapses++;
-            }
-
-
+        if (frand(0, 1) <= percentInhibitoryNeuron) {
+            t->isInhibitory = true;
+        }// if not, is it motor ?
+        else {
+            t->isInhibitory = false;
         }
+
+        if (frand(0, 1) <= percentOutputNeuron) {
+            OutNeuron* mn = getRandomOutNeuron();
+
+            // check if motor already used
+            //            bool proceed = true;
+            //            for (NeuronBuilder nb : neuronBuilders) {
+            //                if (nb.motor == mn) {
+            //                    proceed = false;
+            //                    break;
+            //                }
+            //            }
+
+            //if (proceed) {
+
+            //Allows a motor neuron to receive multiple inputs
+            t->target = mn;
+            //}
+        } else {
+            t->target = NULL;
+        }
+
+        // does it have synaptic plasticity ?
+        if (frand(0, 1) <= percentChancePlasticNeuron) {
+            t->isPlastic = true;
+            t->plasticityStrengthen = frand(minPlasticityStrengthen, maxPlasticityStrengthen);
+            t->plasticityWeaken = frand(minPlasticityWeaken, maxPlasticityWeaken);
+        } else {
+            t->isPlastic = false;
+            t->plasticityStrengthen = (minPlasticityStrengthen + maxPlasticityStrengthen) / 2.0;
+            t->plasticityWeaken = (minPlasticityWeaken + maxPlasticityWeaken) / 2.0;
+        }
+
+        // does it have consistent synapses ?
+        if (frand(0, 1) <= percentChanceConsistentSynapses) {
+            t->hasConsistentSynapses = true;
+
+            // if so, does it have inhibitory synapses ?
+            if (frand(0, 1) <= percentInhibitorySynapse) {
+                t->hasInhibitorySynapses = true;
+            }
+        }
+
+        // determine firing threshold
+        if (t->target != NULL) {
+            t->firingThreshold = maxFiringThreshold;
+            //an->maxDendridicBranches = maxDendridicBranches;
+        } else {
+            t->firingThreshold = frand(minFiringThreshold, maxFiringThreshold);
+            //an->maxDendridicBranches = irand(1, maxDendridicBranches);
+        }
+
+        //maximum that a synapse can multiply a signal. 1.0 = conserved
+        t->maxSynapseWeight = maxSynapseWeight; //ex: 1.0
+        t->minSynapseWeight = minSynapseWeight; //ex: 0.1
+
+        t->potentialDecay = neuronPotentialDecay; //ex: 0.995;
+
+        addNeuron(t);
+
+        // determine amount of synapses this neuron will start with
+        int numSynapses = irand(minSynapsesPerNeuron, maxSynapsesPerNeuron);
+
+        bool isSensorNeuron;
+        // create the architectural neurons
+        for (int j = 0; j < numSynapses; j++) {
+            AbstractNeuron* inNeuron;
+            if (frand(0, 1) <= percentInputSynapse || neurons.size() < 2) {
+                isSensorNeuron = true;
+                inNeuron = getRandomInNeuron();
+            } else {
+                isSensorNeuron = false;
+                inNeuron = getRandomInterNeuron();
+            }
+
+            float weight;
+            if (t->hasConsistentSynapses) {
+                weight = (t->hasInhibitorySynapses) ? -1.0 : 1.0;
+            } else {
+                float percentChanceInhibitorySynapses = 0.5f;
+                weight = (frand(0, 1) <= percentChanceInhibitorySynapses) ? -1.0 : 1.0;
+            }
+
+
+            Synapse* s = new Synapse(inNeuron, weight);
+            addSynapse(s, t);
+            totalSynapses++;
+        }
+
 
     }
 
@@ -359,8 +332,8 @@ public:
         cout << "  ins/outs: " << ins.size() << "|" << outs.size() << '\n';
         cout << "  Synapses: " << totalSynapses << '\n';
         cout << "  Avg Synapses/Neuron: " << ((float) totalSynapses) / ((float) numNeurons) << '\n';
-//        cout << "    Min Synapses: " << minSynapses << '\n';
-//        cout << "    Max Synapses: " << maxSynapses << '\n';
+        //        cout << "    Min Synapses: " << minSynapses << '\n';
+        //        cout << "    Max Synapses: " << maxSynapses << '\n';
     }
 
     void print() {
@@ -391,8 +364,13 @@ public:
         cout << "All neurons have firingThreshold=" << ft << "\n";
     }
 
-    unsigned getNumInputs() { return ins.size(); }
-    unsigned getNumOutputs() { return outs.size(); }
+    unsigned getNumInputs() {
+        return ins.size();
+    }
+
+    unsigned getNumOutputs() {
+        return outs.size();
+    }
 
 };
 
