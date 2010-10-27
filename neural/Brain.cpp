@@ -27,16 +27,6 @@ void Brain::update(float dt) {
 //    sv.reserve(neurons.size());
 
     for (map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (im != neurons.end()); im++) {
-        //nv.push_back(im->first);
-        //sv.push_back(im->second);
-    //}
-
-
-    
-    //#pragma omp parallel for
-    //for (unsigned j = 0; j < nv.size(); j++) {
-        //cout << omp_in_parallel() << " " << omp_get_dynamic() <<" " << omp_get_thread_num() << " of " << omp_get_num_threads() << "\n";
-
         Neuron* n = im->first; //nv[j];
         learnedTotal += n->forward(dt, im->second);
 
@@ -51,11 +41,13 @@ void Brain::update(float dt) {
                 mn->stimulate(n->nextOutput);
             }
         }
+
     }
 
     // commit outputs at the end
     for (map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (im != neurons.end()); im++) {
         Neuron* n = im->first;
+        printf("%p %f -> %f\n", n, n->output, n->nextOutput);
         n->output = n->nextOutput;
     }
 

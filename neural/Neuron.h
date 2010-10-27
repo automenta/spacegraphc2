@@ -193,6 +193,10 @@ public:
     }
 
     virtual double forward(float dt, list<Synapse*>* synapses) = 0;
+
+    virtual float getOutput() {
+        return output;
+    }
     
 };
 
@@ -225,7 +229,7 @@ class CritterdingNeuron : public Neuron {
             }
 
             potential += s->weight * s->getInput() /** s->dendriteBranch * */;
-            //cout << "Synapse " << s << " " << s->getInput() << " :: pot=" << potential << "\n";
+            //cout << "Synapse " << s->weight << " " << s->getInput() << " :: pot=" << potential << "\n";
         }
 
         if (isInhibitory) {

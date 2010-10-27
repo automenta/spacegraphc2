@@ -505,23 +505,24 @@ void Spacegraph::mouseMotionFunc(int x, int y) {
 
 
     ///only if ALT key is pressed (Maya style)
-    /**if (m_modifierKeys & BT_ACTIVE_ALT)*/
+    if (m_modifierKeys & BT_ACTIVE_ALT)
     {
-//        if (m_mouseButtons & 2) {
-//            btVector3 hor = getRayTo(0, 0) - getRayTo(1, 0);
-//            btVector3 vert = getRayTo(0, 0) - getRayTo(0, 1);
-//            btScalar multiplierX = btScalar(0.001);
-//            btScalar multiplierY = btScalar(0.001);
-//            if (m_ortho) {
-//                multiplierX = 1;
-//                multiplierY = 1;
-//            }
-//
-//
-//            m_cameraTargetPosition += hor * dx * multiplierX;
-//            m_cameraTargetPosition += vert * dy * multiplierY;
-//        }
+        if (m_mouseButtons & 4) {
+            btVector3 hor = getRayTo(0, 0) - getRayTo(1, 0);
+            btVector3 vert = getRayTo(0, 0) - getRayTo(0, 1);
+            btScalar multiplierX = btScalar(0.001);
+            btScalar multiplierY = btScalar(0.001);
+            if (m_ortho) {
+                multiplierX = 1;
+                multiplierY = 1;
+            }
 
+
+            m_cameraTargetPosition += hor * dx * multiplierX;
+            m_cameraTargetPosition += vert * dy * multiplierY;
+        }
+    }
+    else {
         if (m_mouseButtons & (2 << 2) && m_mouseButtons & 1) {
         } else if (m_mouseButtons & 2) {
             nextAzi += dx * btScalar(0.2);

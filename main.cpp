@@ -46,7 +46,7 @@ void testBrain() {
     vector<InNeuron*> ins;
     vector<OutNeuron*> outs;
 
-    unsigned numIn = 16, numOut = 16, num = 32;
+    unsigned numIn = 32, numOut = 32, num = 256;
 
     for (unsigned i = 0; i < numIn; i++) {
         InNeuron* n = new InNeuron();
@@ -61,17 +61,30 @@ void testBrain() {
     b->addOutputs(&outs);
 
     unsigned minSynapsesPerNeuron = 1;
-    unsigned maxSynapsesPerNeuron = 16;
+    unsigned maxSynapsesPerNeuron = 32;
     float percentInhibitoryNeuron = 0.5;
     float percentInhibitorySynapse = 0.5;
-    float percentInputSynapse = 0.15;
+    float percentInputSynapse = 0.5;
     float percentOutputNeuron = 0.5;
-    float minSynapseWeight = 0.2;
-    float maxSynapseWeight = 0.9;
+    float minSynapseWeight = 0.30;
+    float maxSynapseWeight = 0.99;
     float neuronPotentialDecay = 0.98;
 
-    for (unsigned i = 0; i < num; i++) {
+//    for (unsigned i = 0; i < num; i++) {
+//        b->wireRandomly(
+//                minSynapsesPerNeuron, maxSynapsesPerNeuron,
+//                percentInhibitoryNeuron,
+//                percentInputSynapse,
+//                percentInhibitorySynapse,
+//                percentOutputNeuron,
+//                minSynapseWeight,
+//                maxSynapseWeight,
+//                neuronPotentialDecay
+//                );
+//    }
+    
         b->wireRandomly(
+                num,
                 minSynapsesPerNeuron, maxSynapsesPerNeuron,
                 percentInhibitoryNeuron,
                 percentInputSynapse,
@@ -81,15 +94,18 @@ void testBrain() {
                 maxSynapseWeight,
                 neuronPotentialDecay
                 );
-    }
 
     b->printSummary();
 
     Spacegraph s;
 
     s.initPhysics();
+
+    BrainSpace* bs = new BrainSpace(&s, b);
+    //bs->fdLayout(100);
+    bs->randomizeLocations(70.0, 70.0, 70.0);
     
-    s.addCell(new BrainSpace(&s, b));
+    s.addCell(bs);
 
     glutmain(0, NULL, 1920, 1080, "SpaceGraphC", &s);
 
