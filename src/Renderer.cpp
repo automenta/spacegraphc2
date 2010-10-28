@@ -576,7 +576,8 @@ void Renderer::drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btV
 
 
 
-        process->draw();
+        if (process!=NULL)
+            process->draw();
 
 
 	}

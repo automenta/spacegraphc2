@@ -32,16 +32,16 @@ public:
 
 	}
         
-	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape) {
+	virtual btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape) {
             return addNewBody(mass, startTransform, shape, 0.5, 0.5, 0.5);
         }
 
-	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, float r, float g, float b) {
+	virtual btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, float r, float g, float b) {
             return addNewBody(mass, startTransform, shape, new BodyProcess(r, g, b));
         }
 
 
-	btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, BodyProcess* process)
+	virtual btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, BodyProcess* process)
 	{
 		bool isDynamic = (mass != 0.f);
 

@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 
+#include <vector>
 using namespace std;
 
 #include "Spacegraph.h"
@@ -21,6 +22,7 @@ using namespace std;
 #include "Brain.h"
 #include "Neuron.h"
 #include "BrainSpace.h"
+#include "Spider.h"
 
 void eden() {
     Spacegraph s;
@@ -30,10 +32,29 @@ void eden() {
     s.getSpace()->setGravity(btVector3(0, -10.0, 0));
 
     s.addGround();
-    s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
-    s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
-    s.addCell(new Bench(&s, btVector3(1.7, 1.9, 1.6)));
+
+//    s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
+//    s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
+//    s.addCell(new Bench(&s, btVector3(1.7, 1.9, 1.6)));
     s.addCell(new Snake(&s, btVector3(1.7, 1.9, -1.6), 15, 0.2, 0.1));
+
+    {
+        /*Spider(Spacegraph* s,
+                unsigned numLegs,
+         vector<btScalar>* _legLengths,
+         vector<btScalar>* _legRadii,
+         const btVector3& _positionOffset,
+         unsigned _retinaSize, unsigned _initialNeurons=1000) : Cell(s) {
+         *
+         */
+        vector<btScalar> legLengths;
+        vector<btScalar> legRadii;
+        legLengths.push_back(0.6);  legRadii.push_back(0.15);
+        legLengths.push_back(0.5);  legRadii.push_back(0.1);
+        legLengths.push_back(0.4);  legRadii.push_back(0.05);
+
+        s.addCell(new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 4096));
+    }
 
     //s.getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
     glutmain(0, NULL, 1920, 1080, "SpaceGraphC", &s);
@@ -99,6 +120,6 @@ void testBrain() {
 }
 
 int main(int argc, char* argv[]) {
-    //eden();
-    testBrain();
+    eden();
+    //testBrain();
 }

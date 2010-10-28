@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="69">
   <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="bio" displayName="bio" projectFiles="true">
+      <itemPath>bio/BloodBrainInterface.cpp</itemPath>
+      <itemPath>bio/BloodBrainInterface.h</itemPath>
+      <itemPath>bio/NColor.cpp</itemPath>
+      <itemPath>bio/NColor.h</itemPath>
+      <itemPath>bio/NPosition.cpp</itemPath>
+      <itemPath>bio/NPosition.h</itemPath>
+      <itemPath>bio/Retina.cpp</itemPath>
+      <itemPath>bio/Retina.h</itemPath>
+      <itemPath>bio/ServoHinge.cpp</itemPath>
+      <itemPath>bio/ServoHinge.h</itemPath>
+      <itemPath>bio/SineSound.cpp</itemPath>
+      <itemPath>bio/SineSound.h</itemPath>
+      <itemPath>bio/SixDoFMotor.cpp</itemPath>
+      <itemPath>bio/SixDoFMotor.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="bullet-gl" displayName="bullet-gl" projectFiles="true">
       <logicalFolder name="CMakeFiles"
                      displayName="CMakeFiles"
@@ -832,6 +848,8 @@
       <itemPath>obj/Humanoid.h</itemPath>
       <itemPath>obj/Snake.cpp</itemPath>
       <itemPath>obj/Snake.h</itemPath>
+      <itemPath>obj/Spider.cpp</itemPath>
+      <itemPath>obj/Spider.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -877,6 +895,7 @@
     <Elem>src</Elem>
     <Elem>obj</Elem>
     <Elem>neural</Elem>
+    <Elem>bio</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -894,6 +913,7 @@
             <pElem>src</pElem>
             <pElem>obj</pElem>
             <pElem>neural</pElem>
+            <pElem>bio</pElem>
           </incDir>
           <commandLine>-fopenmp</commandLine>
         </ccTool>

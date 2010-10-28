@@ -16,6 +16,7 @@
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>obj</sourceRootElem>
                 <sourceRootElem>neural</sourceRootElem>
+                <sourceRootElem>bio</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>Debug</confElem>

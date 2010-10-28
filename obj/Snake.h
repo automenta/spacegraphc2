@@ -69,8 +69,6 @@ public:
             //con->setLimit(M_PI_4, M_PI_4, M_PI_2);
             joints[i] = con;
             //coneC->setDbgDrawSize(CONSTRAINT_DEBUG_SIZE);
-
-            printf("added joint between %d and %d\n", i, i+1);
             
             m_ownerWorld->addConstraint(joints[i], true);
         }
