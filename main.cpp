@@ -46,7 +46,7 @@ void testBrain() {
     vector<InNeuron*> ins;
     vector<OutNeuron*> outs;
 
-    unsigned numIn = 32, numOut = 32, num = 256;
+    unsigned numIn = 32, numOut = 16, num = 256;
 
     for (unsigned i = 0; i < numIn; i++) {
         InNeuron* n = new InNeuron();
@@ -56,44 +56,31 @@ void testBrain() {
     b->addInputs(&ins);
 
     for (unsigned i = 0; i < numOut; i++) {
-        outs.push_back(new OutNeuron());
+        outs.push_back(new OutNeuron(0.8, 0.999));
     }
     b->addOutputs(&outs);
 
-    unsigned minSynapsesPerNeuron = 1;
-    unsigned maxSynapsesPerNeuron = 32;
+    unsigned minSynapsesPerNeuron = 2;
+    unsigned maxSynapsesPerNeuron = 6;
     float percentInhibitoryNeuron = 0.5;
     float percentInhibitorySynapse = 0.5;
     float percentInputSynapse = 0.5;
     float percentOutputNeuron = 0.5;
-    float minSynapseWeight = 0.30;
+    float minSynapseWeight = 0.50;
     float maxSynapseWeight = 0.99;
-    float neuronPotentialDecay = 0.98;
+    float neuronPotentialDecay = 0.99;
 
-//    for (unsigned i = 0; i < num; i++) {
-//        b->wireRandomly(
-//                minSynapsesPerNeuron, maxSynapsesPerNeuron,
-//                percentInhibitoryNeuron,
-//                percentInputSynapse,
-//                percentInhibitorySynapse,
-//                percentOutputNeuron,
-//                minSynapseWeight,
-//                maxSynapseWeight,
-//                neuronPotentialDecay
-//                );
-//    }
-    
-        b->wireRandomly(
-                num,
-                minSynapsesPerNeuron, maxSynapsesPerNeuron,
-                percentInhibitoryNeuron,
-                percentInputSynapse,
-                percentInhibitorySynapse,
-                percentOutputNeuron,
-                minSynapseWeight,
-                maxSynapseWeight,
-                neuronPotentialDecay
-                );
+    b->wireRandomly(
+            num,
+            minSynapsesPerNeuron, maxSynapsesPerNeuron,
+            percentInhibitoryNeuron,
+            percentInputSynapse,
+            percentInhibitorySynapse,
+            percentOutputNeuron,
+            minSynapseWeight,
+            maxSynapseWeight,
+            neuronPotentialDecay
+            );
 
     b->printSummary();
 

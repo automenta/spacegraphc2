@@ -47,7 +47,7 @@ void Brain::update(float dt) {
     // commit outputs at the end
     for (map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (im != neurons.end()); im++) {
         Neuron* n = im->first;
-        printf("%p %f -> %f\n", n, n->output, n->nextOutput);
+        //printf("%p %f -> %f\n", n, n->output, n->nextOutput);
         n->output = n->nextOutput;
     }
 

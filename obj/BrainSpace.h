@@ -221,7 +221,7 @@ public:
 
     virtual void draw() {
         brain->addRandomInputs(-0.3, 0.3, 0.98);
-        brain->update(0.1); //TODO move this to (non-draw) update method
+        brain->update(0.01); //TODO move this to (non-draw) update method
         updateNeuronSizes(0.5, 2.0);
         fdLayout(1);
 
@@ -274,12 +274,10 @@ public:
         float naturalLength = 12.0;
         float tension = 0.1;
         float speed = 0.1;
-        float repulsion = 0.7;
+        float repulsion = 0.3;
 
         btVector3 minXYZ(-20, -20, -20);
         btVector3 maxXYZ(20, 20, 20);
-
-        unsigned int numNeurons = brain->neurons.size();
 
 
         //attract

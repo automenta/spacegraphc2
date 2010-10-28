@@ -91,12 +91,12 @@ public:
         outValues.resize(outs.size(), 0);
     }
 
-    OutNeuron* newOutput() {
-        OutNeuron* o = new OutNeuron();
-        outs.push_back(o);
-        outValues.resize(outs.size(), 0);
-        return o;
-    }
+//    OutNeuron* newOutput() {
+//        OutNeuron* o = new OutNeuron();
+//        outs.push_back(o);
+//        outValues.resize(outs.size(), 0);
+//        return o;
+//    }
 
     InNeuron* getRandomInNeuron() {
         int i = irand(0, ins.size());

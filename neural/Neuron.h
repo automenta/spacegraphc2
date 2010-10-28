@@ -80,10 +80,14 @@ public:
     float potentialDecay;
 
     OutNeuron() {
+        OutNeuron(0, 0);
+    }
+
+    OutNeuron(float _stimulationFactor, float _potentialDecay) {
         AbstractNeuron();
         potential = 0;
-        stimulationFactor = 0.1;
-        potentialDecay = 0.99;
+        stimulationFactor = _stimulationFactor;
+        potentialDecay = _potentialDecay;
     }
 
     void setStimulationFactor(double newStimulationFactor) {
