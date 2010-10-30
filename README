@@ -82,3 +82,21 @@ Development Plan:
 
 		update()
 
+--------
+
+[16:36] <sseehh__> once its all ported then i can grow it to new features
+[16:37] <sseehh__> including the in-world controls
+[16:37] <sseehh__> for building and manipulating creatures
+[16:37] <sseehh__> like tables and benches and factories
+[16:37] <sseehh__> with switches and sliders
+[16:37] <sseehh__> then the creatures will eventually be capable of building other creatures
+[16:37] <flamt> :|
+[16:37] <sseehh__> pushing buttons, looking at readouts
+[16:38] <sseehh__> AI engines will become useful
+[16:38] <sseehh__> we can input semantic data directly into cognition engines, for instance
+[16:38] <sseehh__> bypassing low-level neural stuff
+[16:38] <sseehh__> but still including it
+[16:38] <sseehh__> for things like vision and balancing
+[16:38] <flamt> that will be a very rich world
+[16:38] <flamt> comparatively
+[16:38] <flamt> like greg egan

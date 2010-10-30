@@ -41,7 +41,7 @@ public:
         }
 
 
-	virtual btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, BodyProcess* process)
+	virtual btRigidBody* addNewBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape, BodyProcess* process, bool collidable=true)
 	{
 		bool isDynamic = (mass != 0.f);
 
@@ -54,7 +54,13 @@ public:
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass,myMotionState,shape,localInertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
 
-		m_ownerWorld->addRigidBody(body);
+                if (collidable) {
+                    m_ownerWorld->addRigidBody(body);
+                }
+                else {
+                    ((btDiscreteDynamicsWorld*)m_ownerWorld)->addRigidBody(body, 0, 0);
+                }
+
                 spacegraph->setBodyProcess(body, process);
 
                 processes->push_back(process);
@@ -73,7 +79,7 @@ public:
             spacegraph->removeBodyProcess(body);
         }
 
-        void update(double dt) {
+        virtual void update(double dt) {
             list<BodyProcess*>::iterator p = processes->begin();
             while(p != processes->end()){
                 (*p)->update(dt);

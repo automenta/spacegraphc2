@@ -33,6 +33,7 @@ public:
 
     vector<InNeuron*> ins;
     vector<OutNeuron*> outs;
+    vector<Neuron*> neuronList;
 
     vector<float> inValues;
     vector<float> outValues;
@@ -109,13 +110,16 @@ public:
     }
 
     Neuron* getRandomInterNeuron() {
-        int i = irand(0, neurons.size());
-        Neuron* n = NULL;
-        for(map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (i >= 0) && (im != neurons.end()); im++, i--) {
-            //cout << im->first << " " << im->second << endl;
-            n = im->first;
-        }
-        return n;
+        int i = irand(0, neuronList.size());
+        return neuronList[i];
+
+//        int i = irand(0, neurons.size());
+//        Neuron* n = NULL;
+//        for(map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (i >= 0) && (im != neurons.end()); im++, i--) {
+//            //cout << im->first << " " << im->second << endl;
+//            n = im->first;
+//        }
+//        return n;
     }
 
     void addRandomInputs(double minValue, double maxValue, double decay) {
@@ -150,8 +154,8 @@ public:
 
         float percentChancePlasticNeuron = 1.0;
 
-        float minFiringThreshold = 0.01;
-        float maxFiringThreshold = 0.9999;
+        float minFiringThreshold = 0.75;
+        float maxFiringThreshold = 0.99;
 
         Neuron* t = (frand(0,1) < 0.5) ? ((Neuron*)new CritterdingNeuron()) : ((Neuron*)new IzhikevichNeuron());
 
@@ -359,14 +363,15 @@ public:
 
     bool addNeuron(Neuron* n) {
         neurons[n] = new list<Synapse*>();
+        neuronList.push_back(n);
         return true;
     }
 
-    bool removeNeuron(Neuron* n) {
-        //TODO remove all synapses that have an input==n
-        neurons.erase(n);
-        return true;
-    }
+//    bool removeNeuron(Neuron* n) {
+//        //TODO remove all synapses that have an input==n
+//        neurons.erase(n);
+//        return true;
+//    }
 
     void addSynapse(Synapse* s, Neuron* target) {
         neurons[target]->push_back(s);
@@ -387,7 +392,7 @@ public:
         neurons[target]->clear();
     }
 
-    void update(float dt);
+    double update(float dt);
 
     //    void forwardParallel(float dt) {
     //        //TODO handle 'dt' appropriately

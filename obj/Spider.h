@@ -77,15 +77,15 @@ public:
     }
 
     void addNeurons(unsigned num) {
-        unsigned minSynapsesPerNeuron = 1;
-        unsigned maxSynapsesPerNeuron = 32;
+        unsigned minSynapsesPerNeuron = 2;
+        unsigned maxSynapsesPerNeuron = 24;
         float percentInhibitoryNeuron = 0.5f;
-        float percentInputSynapse = 0.25f;
-        float percentOutputNeuron = 0.05f;
         float percentInhibitorySynapse = 0.5f;
+        float percentInputSynapse = 0.25f;
+        float percentOutputNeuron = 0.1f;
         float minSynapseWeight = 0.001f;
-        float maxSynapseWeight = 3.0f;
-        float neuronPotentialDecay = 0.98f;
+        float maxSynapseWeight = 2.0f;
+        float neuronPotentialDecay = 0.99f;
         brain->wireRandomly(num, minSynapsesPerNeuron, maxSynapsesPerNeuron,
             percentInhibitoryNeuron, percentInputSynapse, percentOutputNeuron, percentInhibitorySynapse,
             minSynapseWeight, maxSynapseWeight, neuronPotentialDecay);
@@ -94,10 +94,22 @@ public:
     }
 
 
-    virtual void update(float dt) {
+    virtual void update(double dt) {
 
+        Cell::update(dt);
+        
         for (unsigned i = 0; i < bodies.size(); ++i) {
-            partPos[i]->set(bodies[i]->getCenterOfMassTransform().getRotation().getAxis().m_floats);
+            //if (i == 0) {
+                //Absolute rotation
+                partPos[i]->set(bodies[i]->getCenterOfMassTransform().getRotation().getAxis().m_floats);
+//            }
+//            else {
+//                //Relative to center body
+//                partPos[i]->set(
+//                    bodies[i]->getCenterOfMassTransform().getRotation().getAxis().m_floats,
+//                    bodies[0]->getCenterOfMassTransform().getRotation().getAxis().m_floats
+//                );
+//            }
             partPos[i]->process(dt);
         }
 
@@ -108,13 +120,15 @@ public:
             legEye[j]->process(dt);
 
         //process brain
-        unsigned brainSteps = 2;
-        for (unsigned j = 0; j < brainSteps; j++)
-            brain->update(dt/((double)brainSteps));
+        unsigned brainSteps = 1;
+        for (unsigned j = 0; j < brainSteps; j++) {
+            double learned = brain->update(dt/((double)brainSteps));
+            //printf("learned: %f\n", learned);
+        }
 
         for (j = 0; j < impulseControllers.size(); j++)
             impulseControllers[j]->process(dt);
-        
+
         for (j = 0; j < jointControllers.size(); j++)
             jointControllers[j]->process(dt);
 

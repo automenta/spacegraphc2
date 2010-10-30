@@ -117,6 +117,8 @@ public:
 
     void addNeuron(OutNeuron* o, btVector3& position) {
 
+        float neuronMass = 15;
+        
         btTransform offset;
         offset.setIdentity();
         offset.setOrigin(position);
@@ -124,7 +126,7 @@ public:
         btBoxShape* baseShape = new btBoxShape(btVector3(0.5, 0.5, 0.5));
 
         OutNeuronProcess* proc = new OutNeuronProcess(o);
-        btRigidBody* base = addNewBody(btScalar(15.), offset, baseShape, proc);
+        btRigidBody* base = addNewBody(btScalar(neuronMass), offset, baseShape, proc);
         base->setDamping(0.05, 0.85);
         base->setDeactivationTime(0.8);
         base->setSleepingThresholds(1.6, 2.5);
@@ -222,8 +224,8 @@ public:
     virtual void draw() {
         brain->addRandomInputs(-0.3, 0.3, 0.98);
         brain->update(0.01); //TODO move this to (non-draw) update method
-        updateNeuronSizes(0.5, 2.0);
-        fdLayout(1);
+        updateNeuronSizes(0.5, 0.5, 2.0);
+        fdLayout();
 
         glBegin(GL_TRIANGLES);
 
@@ -244,6 +246,7 @@ public:
     void randomizeLocations(float wx, float wy, float wz) {
         for(map< Neuron*, list<Synapse*>* >::iterator im = brain->neurons.begin(); (im != brain->neurons.end()); im++) {
             Neuron* a = im->first;
+            
             btRigidBody *aBod = neuronToBody[a];
             btVector3 aPos = aBod->getWorldTransform().getOrigin();
             aPos.setValue(frand(0, wx), frand(0, wy), frand(0, wz));
@@ -252,7 +255,7 @@ public:
 
     }
 
-    void updateNeuronSizes(float neuronSize, float maxSize) {
+    void updateNeuronSizes(float neuronSize, float minSize, float maxSize) {
         //update shape sizes
         for (map< Neuron*, list<Synapse*>* >::iterator im = brain->neurons.begin(); (im != brain->neurons.end()); im++) {
             Neuron *n = im->first;
@@ -263,15 +266,16 @@ public:
 
             float w = s * (1.0 + (fabs(n->getOutput())));
             float h = s * (1.0 + sqrt(fabs(n->potential)));
-            w = fmin(w, maxSize);
-            h = fmin(h, maxSize);
+            w = fmax(minSize, fmin(w, maxSize));
+            h = fmax(minSize, fmin(h, maxSize));
+
             bt->setLocalScaling(btVector3(w, h, (w + h) / 2.0));
         }
     }
 
-    void fdLayout(unsigned iterations) {
+    void fdLayout() {
         float neuronSize = 0.5;
-        float naturalLength = 12.0;
+        float naturalLength = 30.0;
         float tension = 0.1;
         float speed = 0.1;
         float repulsion = 0.3;

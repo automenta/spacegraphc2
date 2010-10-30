@@ -5,9 +5,11 @@
  *      Author: seh
  */
 
+#include <omp.h>
+
 #include "Brain.h"
 
-void Brain::update(float dt) {
+double Brain::update(float dt) {
     //TODO handle 'dt' appropriately
 
     // reset fired neurons counter
@@ -26,9 +28,19 @@ void Brain::update(float dt) {
 //    nv.reserve(neurons.size());
 //    sv.reserve(neurons.size());
 
-    for (map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (im != neurons.end()); im++) {
-        Neuron* n = im->first; //nv[j];
-        learnedTotal += n->forward(dt, im->second);
+    //for (map< Neuron*, list<Synapse*>* >::iterator im = neurons.begin(); (im != neurons.end()); im++) {
+
+
+    unsigned u;
+    
+    #pragma omp parallel for private(u)
+    for (u = 0; u < neuronList.size(); u++)
+    {
+        //Neuron* n = im->first; //nv[j];
+        Neuron* n = neuronList[u];
+
+        //learnedTotal += n->forward(dt, im->second);
+        learnedTotal += n->forward(dt, neurons[n]);
 
         // if neuron fires
         if (n->nextOutput != 0) {
@@ -42,6 +54,7 @@ void Brain::update(float dt) {
             }
         }
 
+        int th_id = omp_get_thread_num();
     }
 
     // commit outputs at the end
@@ -58,4 +71,6 @@ void Brain::update(float dt) {
 
     //nv.clear();
     //sv.clear();
+
+    return learnedTotal;
 }

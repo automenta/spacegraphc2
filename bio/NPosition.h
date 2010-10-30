@@ -29,6 +29,11 @@ public:
         v = nextP - p;
         p = nextP;
     }
+    void set(float f[], float r[]) {
+        btVector3 nextP(f[0]-r[0], f[1]-r[1], f[2]-r[2]);
+        v = nextP - p;
+        p = nextP;
+    }
 
     void setSin(btVector3 nextP, double distScale) {
         nextP = btVector3(sin(nextP[0] * distScale), sin(nextP[1] * distScale), sin(nextP[2] * distScale));

@@ -16,17 +16,16 @@ class SixDoFMotor : public NOutput {
     btGeneric6DofConstraint* constraint;
 
     float normalLength;
-    float linearScale, angularScale;
-    float linearStimulation, angularStimulation;
+    float /*linearScale,*/ angularScale;
+    float /*linearStimulation,*/ angularStimulation;
 
-    float lastAngle1, lastAngle2, lastLength;
+    //float lastAngle1, lastAngle2, lastLength;
+    
 public:
 
-    SixDoFMotor(Brain* b, btGeneric6DofConstraint* _constraint, float _linearScale, float _angularScale, float _linearStimulation, float _angularStimulation) :
-    NOutput(b, 3), constraint(_constraint), normalLength(0), linearScale(_linearScale), angularScale(_angularScale),
-    linearStimulation(_linearStimulation), angularStimulation(_angularStimulation) {
-
-        lastAngle1 = lastAngle2 = lastLength = 0;
+    SixDoFMotor(Brain* b, btGeneric6DofConstraint* _constraint, float _angularScale, float _angularStimulation) :
+    NOutput(b, 2), constraint(_constraint), normalLength(0), angularScale(_angularScale),
+     angularStimulation(_angularStimulation) {
 
     }
 
@@ -35,47 +34,50 @@ public:
         outs[0]->setDecay(0.99);
         outs[1]->setStimulationFactor(angularStimulation);
         outs[1]->setDecay(0.99);
-        outs[2]->setStimulationFactor(linearStimulation);
-        outs[2]->setDecay(0.99);
+//        outs[2]->setStimulationFactor(linearStimulation);
+//        outs[2]->setDecay(0.99);
 
-        float smoothing = 0.02;
+        //float smoothing = 0.02;
 
         double a1 = outs[0]->getOutput();
         double a2 = outs[1]->getOutput();
-        double l = outs[2]->getOutput();
+        //double l = outs[2]->getOutput();
 
-        double angle1 = smoothing * a1 + (1.0 - smoothing) * lastAngle1;
-        double angle2 = smoothing * a2 + (1.0 - smoothing) * lastAngle2;
-        double lengthMod = smoothing * l + (1.0 - smoothing) * lastLength;
+        //double angle1 = smoothing * a1 + (1.0 - smoothing) * lastAngle1;
+        //double angle2 = smoothing * a2 + (1.0 - smoothing) * lastAngle2;
+        //double lengthMod = smoothing * l + (1.0 - smoothing) * lastLength;
 
-        lastAngle1 = angle1;
-        lastAngle2 = angle2;
-        lastLength = lengthMod;
+        //lastAngle1 = angle1;
+        //lastAngle2 = angle2;
+        //lastLength = lengthMod;
 
         //TODO expose this parameter
-        double lengthVariation = 0.001;
+        //double lengthVariation = 0.001;
 
         float xmax = 0; //normalLength + (lengthMod) * lengthVariation;
         float xmin = 0;
 
         //cout << xmin << " " << xmax << "\n";
 
-        constraint->setAngularLowerLimit(btVector3(-angularScale/2, -angularScale/2, 0));
-        constraint->setAngularUpperLimit(btVector3(angularScale/2, angularScale/2, 0));
+        //constraint->setAngularLowerLimit(btVector3(-angularScale/2, -angularScale/2, -angularScale/2));
+        //constraint->setAngularUpperLimit(btVector3(angularScale/2, angularScale/2, angularScale/2));
 
         constraint->getTranslationalLimitMotor()->m_currentLimit[0] = xmax;
         constraint->getTranslationalLimitMotor()->m_lowerLimit.setX(xmax);
         constraint->getTranslationalLimitMotor()->m_upperLimit.setX(xmax);
-        constraint->getTranslationalLimitMotor()->m_enableMotor[0] = true;
+        constraint->getTranslationalLimitMotor()->m_enableMotor[0] = false;
 
         //setLimit: 0..2 are linear limits, 3..5 are angular limits
-        
-        float currentAngle1 = angle1 * angularScale;
+        constraint->setLimit(0, 0, 0);
+        constraint->setLimit(1, 0, 0);
+        constraint->setLimit(2, 0, 0);
+
+        float currentAngle1 = a1 * angularScale;
         constraint->getRotationalLimitMotor(0)->m_currentPosition = currentAngle1;
         constraint->setLimit(3+0, currentAngle1, currentAngle1);
         constraint->getRotationalLimitMotor(0)->m_enableMotor = true;
 
-        float currentAngle2 = angle2 * angularScale;
+        float currentAngle2 = a2 * angularScale;
         constraint->getRotationalLimitMotor(1)->m_currentPosition = currentAngle2;
         constraint->setLimit(3+1, currentAngle2, currentAngle2);
         constraint->getRotationalLimitMotor(1)->m_enableMotor = true;

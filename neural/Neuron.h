@@ -229,7 +229,10 @@ class CritterdingNeuron : public Neuron {
 
                 s->weight *= plasticityWeaken;
 
+                clampWeight(s);
+
                 learnedTotal += fabs(s->weight - preWeight);
+
             }
 
             potential += s->weight * s->getInput() /** s->dendriteBranch * */;
@@ -327,7 +330,7 @@ class CritterdingNeuron : public Neuron {
 
     void clampWeight(Synapse* s) {
         //WARNING this may be incorrect
-        //s->weight = fmax(fmin(s->weight, maxSynapseWeight), minSynapseWeight);
+        s->weight = fmax(fmin(s->weight, maxSynapseWeight), minSynapseWeight);
     }
 
 };
@@ -407,11 +410,17 @@ public:
      */
 
     virtual double forward(float dt, list<Synapse*>* fanIn) {
+        double learnedTotal = 0;
+
         for(std::list<Synapse*>::iterator list_iter = fanIn->begin(); list_iter != fanIn->end(); list_iter++) {
             Synapse* s = *list_iter;
             // lower synaptic weights
+
+            double preWeight = s->weight;
             if (isPlastic) {
                 s->weight *= plasticityWeaken;
+                clampWeight(s);
+                learnedTotal += fabs(s->weight - preWeight);
             }
         }
 
@@ -449,6 +458,7 @@ public:
                         // if synapse fired, strengthen the weight
                         if ((o < 0.0f && s->weight > 0.0f) || (o > 0.0f && s->weight < 0.0f)) {
                             s->weight *= plasticityStrengthen;
+                            learnedTotal += fabs(preWeight - s->weight);
                         }
 
                         // clamp weight
@@ -466,6 +476,7 @@ public:
                         // if synapse fired, strengthen the weight
                         if ((o > 0.0f && s->weight > 0.0f) || (o < 0.0f && s->weight < 0.0f)) {
                             s->weight *= plasticityStrengthen;
+                            learnedTotal += fabs(preWeight - s->weight);
                         }
 
                         // if weight > max back to max
@@ -481,11 +492,13 @@ public:
 
 
         nextOutput = val;
+
+        return learnedTotal;
     }
 
     void clampWeight(Synapse* s) {
         //WARNING this may be incorrect
-        //s->weight = fmax(fmin(s->weight, maxSynapseWeight), minSynapseWeight);
+        s->weight = fmax(fmin(s->weight, maxSynapseWeight), minSynapseWeight);
     }
 
 

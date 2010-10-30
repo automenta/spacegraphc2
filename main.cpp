@@ -10,6 +10,8 @@
 #include <vector>
 using namespace std;
 
+#include <omp.h>
+
 #include "Spacegraph.h"
 #include "GlutStuff.h"
 #include "GLDebugDrawer.h"
@@ -29,31 +31,27 @@ void eden() {
 
     s.initPhysics();
 
-    s.getSpace()->setGravity(btVector3(0, -10.0, 0));
+    s.getSpace()->setGravity(btVector3(0, -2.0, 0));
 
     s.addGround();
 
-//    s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
-//    s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
+    //s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
+    //s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
+
 //    s.addCell(new Bench(&s, btVector3(1.7, 1.9, 1.6)));
+
     s.addCell(new Snake(&s, btVector3(1.7, 1.9, -1.6), 15, 0.2, 0.1));
 
     {
-        /*Spider(Spacegraph* s,
-                unsigned numLegs,
-         vector<btScalar>* _legLengths,
-         vector<btScalar>* _legRadii,
-         const btVector3& _positionOffset,
-         unsigned _retinaSize, unsigned _initialNeurons=1000) : Cell(s) {
-         *
-         */
         vector<btScalar> legLengths;
         vector<btScalar> legRadii;
-        legLengths.push_back(0.6);  legRadii.push_back(0.15);
-        legLengths.push_back(0.5);  legRadii.push_back(0.1);
-        legLengths.push_back(0.4);  legRadii.push_back(0.05);
+        legLengths.push_back(0.5);  legRadii.push_back(0.13);
+        legLengths.push_back(0.5);  legRadii.push_back(0.13);
+        legLengths.push_back(0.4);  legRadii.push_back(0.12);
+        legLengths.push_back(0.3);  legRadii.push_back(0.11);
+        legLengths.push_back(0.2);  legRadii.push_back(0.10);
 
-        s.addCell(new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 4096));
+        s.addCell(new Spider(&s, 6, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 10000));
     }
 
     //s.getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
@@ -119,7 +117,15 @@ void testBrain() {
 
 }
 
+void initMP() {
+    omp_set_num_threads(4);
+}
+
 int main(int argc, char* argv[]) {
+
+    initMP();
+
+
     eden();
     //testBrain();
 }
