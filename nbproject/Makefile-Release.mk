@@ -206,8 +206,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionShapes/btConeShape.o \
 	${OBJECTDIR}/bullet-src/BulletSoftBody/btDefaultSoftBodySolver.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.o \
-	${OBJECTDIR}/bio/SixDoFMotor.o \
 	${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.o \
+	${OBJECTDIR}/bio/SixDoFMotor.o \
 	${OBJECTDIR}/bullet-src/BulletDynamics/Dynamics/Bullet-C-API.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuCollisionObjectWrapper.o \
 	${OBJECTDIR}/bullet-src/BulletMultiThreaded/SpuFakeDma.o \
@@ -1105,15 +1105,15 @@ ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btSphereTriangleCollis
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.o bullet-src/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.cpp
 
-${OBJECTDIR}/bio/SixDoFMotor.o: bio/SixDoFMotor.cpp 
-	${MKDIR} -p ${OBJECTDIR}/bio
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bio/SixDoFMotor.o bio/SixDoFMotor.cpp
-
 ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.o: bullet-src/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bullet-src/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.o bullet-src/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.cpp
+
+${OBJECTDIR}/bio/SixDoFMotor.o: bio/SixDoFMotor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/bio
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/bio/SixDoFMotor.o bio/SixDoFMotor.cpp
 
 ${OBJECTDIR}/bullet-src/BulletDynamics/Dynamics/Bullet-C-API.o: bullet-src/BulletDynamics/Dynamics/Bullet-C-API.cpp 
 	${MKDIR} -p ${OBJECTDIR}/bullet-src/BulletDynamics/Dynamics

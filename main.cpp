@@ -51,7 +51,7 @@ void eden() {
         legLengths.push_back(0.3);  legRadii.push_back(0.11);
         legLengths.push_back(0.2);  legRadii.push_back(0.10);
 
-        s.addCell(new Spider(&s, 6, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 10000));
+        s.addCell(new Spider(&s, 6, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 20000));
     }
 
     //s.getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);

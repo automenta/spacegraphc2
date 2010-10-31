@@ -62,5 +62,49 @@ private:
 
 };
 
+
+class NAngle : public NInput {
+    btVector3 direction;
+    unsigned divisions;
+
+public:
+
+    NAngle(Brain* b, unsigned numDivisionsPerAxis) : NInput(b, 3*(numDivisionsPerAxis)) {
+        divisions = numDivisionsPerAxis;
+    }
+
+    void set(btVector3 dir) {
+        direction = dir;
+    }
+
+    virtual void process(double dt) {
+        const btVector3 xBasis(1, 0, 0);
+        const btVector3 yBasis(0, 1, 0);
+        const btVector3 zBasis(0, 0, 1);
+
+        double xAngle = acos( direction.dot(xBasis) );
+        double yAngle = acos( direction.dot(yBasis) );
+        double zAngle = acos( direction.dot(zBasis) );
+
+        int xIndex = floor( xAngle / M_PI  * ((double)divisions) );
+        int yIndex = floor( yAngle / M_PI  * ((double)divisions) );
+        int zIndex = floor( zAngle / M_PI  * ((double)divisions) );
+
+        //printf("%f,%f,%f: %u : %f %f %f : %d %d %d\n", direction.x(), direction.y(), direction.z(), divisions, xAngle, yAngle, zAngle, xIndex, yIndex, zIndex);
+        
+        unsigned p = 0;
+        for (unsigned i = 0; i < divisions; i++) {
+            ins[p++]->setInput( (i == xIndex) ? 1.0 : 0.0 );
+            ins[p++]->setInput( (i == yIndex) ? 1.0 : 0.0 );
+            ins[p++]->setInput( (i == zIndex) ? 1.0 : 0.0 );
+        }
+    }
+
+    virtual ~NAngle() {   }
+
+private:
+
+};
+
 #endif	/* _NPOSITION_H */
 

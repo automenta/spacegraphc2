@@ -46,7 +46,7 @@ class Spider : public Cell {
 
     Retina* headEye;
     
-    vector<NPosition*> partPos;
+    vector<NAngle*> partPos;
     unsigned retinaSize;
     unsigned initialNeurons;
     float headPhase;
@@ -99,17 +99,7 @@ public:
         Cell::update(dt);
         
         for (unsigned i = 0; i < bodies.size(); ++i) {
-            //if (i == 0) {
-                //Absolute rotation
-                partPos[i]->set(bodies[i]->getCenterOfMassTransform().getRotation().getAxis().m_floats);
-//            }
-//            else {
-//                //Relative to center body
-//                partPos[i]->set(
-//                    bodies[i]->getCenterOfMassTransform().getRotation().getAxis().m_floats,
-//                    bodies[0]->getCenterOfMassTransform().getRotation().getAxis().m_floats
-//                );
-//            }
+            partPos[i]->set(bodies[i]->getCenterOfMassTransform().getRotation().getAxis() );
             partPos[i]->process(dt);
         }
 

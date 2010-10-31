@@ -23,12 +23,15 @@ public:
         list<BodyProcess*>* processes;
 	btDynamicsWorld* m_ownerWorld;
         Spacegraph* spacegraph;
+        btScalar defaultFriction;
 
         Cell (Spacegraph* s)		
 	{
             spacegraph = s;
             m_ownerWorld = s->getSpace();
             processes = new list<BodyProcess*>();
+
+            defaultFriction = 0.9;
 
 	}
         
@@ -61,6 +64,7 @@ public:
                     ((btDiscreteDynamicsWorld*)m_ownerWorld)->addRigidBody(body, 0, 0);
                 }
 
+                body->setFriction(defaultFriction);
                 spacegraph->setBodyProcess(body, process);
 
                 processes->push_back(process);

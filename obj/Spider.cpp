@@ -35,6 +35,8 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
 
     double partSeparationFactor = 1.03;
 
+    int angleResolution = 16;
+
     brain = new Brain();
 
     // Setup rigid bodies
@@ -50,7 +52,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
 
     headShape = new btCapsuleShape(btScalar(headRadius), btScalar(headHeight));
 
-    btRigidBody* headBody = addNewBody(headMass, offset*transform, headShape, new BodyProcess(0.5, 0.5, 0.5));
+    btRigidBody* headBody = addNewBody(headMass, offset*transform, headShape, new BodyProcess(0.9, 0.9, 0.9));
 
     float fLegLength = (*legLengths)[0];
 
@@ -79,7 +81,12 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
             float fLegMass = fLegDensity * fLegLength * fLegRadius * fLegRadius; //approximate cylinder volume
             //btCapsuleShape* legPart = new btCapsuleShape(btScalar(fLegRadius), btScalar(fLegLength));
             btBoxShape* legPart = new btBoxShape(btVector3(fLegRadius, fLegLength * 0.5, fLegRadius));
-            btRigidBody* legPartBody = addNewBody(btScalar(fLegMass), offset*transform, legPart, new BodyProcess(0.25, 0.25, 0.25));
+
+            float r = 1.0;
+            float g = j % 2 ? 0.5 : 0.75;
+            float b = i % 2 ? 0.5 : 0.75;
+
+            btRigidBody* legPartBody = addNewBody(btScalar(fLegMass), offset*transform, legPart, new BodyProcess(r, g, b));
 
             //                if (j == PARTS_PER_LEG-1) {
             //                    Retina* r = new Retina(brain, s->getSpace(), legPartBody, retinaSize, retinaSize, 0.78, 90);
@@ -113,7 +120,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
         //bodies[i]->setDeactivationTime(0.8);
         //bodies[i]->setSleepingThresholds(0.5f, 0.5f);
 
-        partPos.push_back(new NPosition(brain, 1));
+        partPos.push_back(new NAngle(brain, angleResolution));
     }
 
     kinestheticInputsStop = brain->getNumInputs();
