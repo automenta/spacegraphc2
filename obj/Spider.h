@@ -34,7 +34,7 @@ class Spider : public Cell {
 
     btVector3 positionOffset;
 
-    vector<SixDoFMotor*> jointControllers;
+    vector<BalancedSixDoFRotator*> jointControllers;
     vector<BodyScaleMotor*> scaleControllers;
     vector<ImpulseMotor*> impulseControllers;
 
@@ -60,7 +60,7 @@ public:
 
     unsigned kinestheticInputsStart, kinestheticInputsStop;
 
-    Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, vector<btScalar>* _legRadii, const btVector3& _positionOffset, unsigned _retinaSize, unsigned _initialNeurons);
+    Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, vector<btScalar>* _legRadii, const btVector3& _positionOffset, unsigned _retinaSize, unsigned _initialNeurons, unsigned minSynapses, unsigned maxSynapses);
     
     void setHeadPhase(float _headPhase) { headPhase = _headPhase; }
 
@@ -76,16 +76,14 @@ public:
         }
     }
 
-    void addNeurons(unsigned num) {
-        unsigned minSynapsesPerNeuron = 2;
-        unsigned maxSynapsesPerNeuron = 24;
+    void addNeurons(unsigned num, unsigned minSynapsesPerNeuron, unsigned maxSynapsesPerNeuron) {
         float percentInhibitoryNeuron = 0.5f;
         float percentInhibitorySynapse = 0.5f;
         float percentInputSynapse = 0.25f;
         float percentOutputNeuron = 0.1f;
-        float minSynapseWeight = 0.001f;
+        float minSynapseWeight = 0.1f;
         float maxSynapseWeight = 2.0f;
-        float neuronPotentialDecay = 0.99f;
+        float neuronPotentialDecay = 0.95f;
         brain->wireRandomly(num, minSynapsesPerNeuron, maxSynapsesPerNeuron,
             percentInhibitoryNeuron, percentInputSynapse, percentOutputNeuron, percentInhibitorySynapse,
             minSynapseWeight, maxSynapseWeight, neuronPotentialDecay);

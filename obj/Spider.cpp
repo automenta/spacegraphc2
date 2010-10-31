@@ -7,7 +7,7 @@
 
 #include "Spider.h"
 
-Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, vector<btScalar>* _legRadii, const btVector3& _positionOffset, unsigned _retinaSize, unsigned _initialNeurons = 1000) : Cell(s) {
+Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, vector<btScalar>* _legRadii, const btVector3& _positionOffset, unsigned _retinaSize, unsigned _initialNeurons, unsigned minSynapses, unsigned maxSynapses) : Cell(s) {
     NUM_LEGS = numLegs;
     legLengths = _legLengths;
     legRadii = _legRadii;
@@ -31,11 +31,13 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
     float fHeight = 0.5;
 
     float fLegDensity = 0.2;
-    float motorStrength = 2.50;
 
-    double partSeparationFactor = 1.03;
+    float motorStrength = 0.1;  //amount that each spike actuates a motor
+    float motorDecay = 0.99; //lower = returns to zero (stillness) quicker, higher = returns to zero slower... between [0,1.0]
 
-    int angleResolution = 16;
+    double partSeparationFactor = 1.05;
+
+    int angleResolution = 12;
 
     brain = new Brain();
 
@@ -154,7 +156,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
         joints.push_back(c);
         s->getSpace()->addConstraint(c);
 
-        SixDoFMotor* sm = new SixDoFMotor(brain, c, M_PI_4 / 4.0, motorStrength);
+        BalancedSixDoFRotator* sm = new BalancedSixDoFRotator(brain, c, M_PI_2 / 2.0, motorStrength, motorDecay);
         jointControllers.push_back(sm);
 
     }
@@ -178,7 +180,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
             joints.push_back(c);
             s->getSpace()->addConstraint(c);
 
-            SixDoFMotor* sm = new SixDoFMotor(brain, c, M_PI_4 / 2.0, motorStrength);
+            BalancedSixDoFRotator* sm = new BalancedSixDoFRotator(brain, c, M_PI_2 / 2.0, motorStrength, motorDecay);
             jointControllers.push_back(sm);
 
         }
@@ -186,6 +188,6 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
 
     //voice = new SineSound(brain, space->audio, 16);
 
-    addNeurons(initialNeurons);
+    addNeurons(initialNeurons, minSynapses, maxSynapses);
 
 }

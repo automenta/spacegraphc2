@@ -102,11 +102,10 @@ public:
         potential = 0;
     }
 
-    void stimulate(float p) {
-        potential += p * stimulationFactor;
+    void stimulate(float pulse) {
+        potential = (potential*potentialDecay) + pulse * stimulationFactor;
         if (potential > 1.0) potential = 1.0;
         if (potential < -1.0) potential = -1.0;
-        potential *= potentialDecay;
     }
 
     virtual float getOutput() {

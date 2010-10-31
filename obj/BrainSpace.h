@@ -63,6 +63,97 @@ public:
     }
 };
 
+class NeuronBarGraph : public Cell {
+public:
+    btVector3* center;
+    float *values;
+    unsigned numValues;
+    float length;
+    AbstractNeuron* neuron;
+    
+    NeuronBarGraph(Spacegraph* s, btVector3* _center, AbstractNeuron *n, float _length, unsigned  _numValues) : Cell(s) {
+
+        center = _center;
+        length = _length;
+
+        numValues = _numValues;
+
+        neuron = n;
+        
+        values = new float[numValues];
+        for (unsigned i = 0; i < numValues; i++)
+            values[i] = 0;
+
+    }
+
+    virtual void update(double dt) {
+        //shift values up
+        for (unsigned i = numValues-1; i > 0; i--) {
+            values[i] = values[i-1];
+        }
+
+        //get next value
+        values[0] = neuron->getOutput();
+    }
+
+    virtual void drawBars() {
+        float x = 0;
+        float dx = length / ((float)numValues);
+
+        glBegin(GL_QUADS);
+        for (unsigned i = 0; i < numValues-1; i++) {
+            float a = values[i];
+            float b = values[i+1];
+            glColor3f(a, a, a);
+            glVertex3f(x, a, 0);
+            glVertex3f(x + dx, b, 0);
+            glVertex3f(x + dx, 0, 0);
+            glVertex3f(x, 0, 0);
+            x += dx;
+        }
+        glEnd();
+
+    }
+
+    virtual void drawLines() {
+        float x = 0;
+        float dx = length / ((float)numValues);
+
+        //float lineWidth = 2.0;
+        
+        //glLineWidth(lineWidth);
+
+        glBegin(GL_LINES);
+        for (unsigned i = 0; i < numValues-1; i++) {
+            float a = values[i];
+            float b = values[i+1];
+            glColor3f(a, a, a);
+            glVertex3f(x, a, 0);
+            x += dx;
+        }
+        glEnd();
+    }
+
+    virtual void draw() {
+
+        glPushMatrix();
+
+        glTranslatef(center->x(), center->y(), center->z());
+        
+
+        if (numValues < 2)
+            return;
+
+
+        //drawBars();
+        drawLines();
+
+        glPopMatrix();
+
+    }
+
+};
+
 class BrainSpace : public Cell {
     Brain* brain;
     map<AbstractNeuron*, btRigidBody*> neuronToBody;

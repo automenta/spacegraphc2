@@ -45,13 +45,18 @@ void eden() {
     {
         vector<btScalar> legLengths;
         vector<btScalar> legRadii;
-        legLengths.push_back(0.5);  legRadii.push_back(0.13);
-        legLengths.push_back(0.5);  legRadii.push_back(0.13);
-        legLengths.push_back(0.4);  legRadii.push_back(0.12);
-        legLengths.push_back(0.3);  legRadii.push_back(0.11);
-        legLengths.push_back(0.2);  legRadii.push_back(0.10);
+        legLengths.push_back(0.2);  legRadii.push_back(0.35);
+        legLengths.push_back(0.15);  legRadii.push_back(0.33);
+        legLengths.push_back(0.12);  legRadii.push_back(0.31);
+        legLengths.push_back(0.11);  legRadii.push_back(0.29);
+        legLengths.push_back(0.10);  legRadii.push_back(0.27);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 
-        s.addCell(new Spider(&s, 6, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 20000));
+
+        Spider* spider = new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 12000, 4, 16);
+        s.addCell(spider);
+
+
     }
 
     //s.getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
@@ -65,7 +70,7 @@ void testBrain() {
     vector<InNeuron*> ins;
     vector<OutNeuron*> outs;
 
-    unsigned numIn = 32, numOut = 16, num = 256;
+    unsigned numIn = 2, numOut = 4, num = 16;
 
     for (unsigned i = 0; i < numIn; i++) {
         InNeuron* n = new InNeuron();
@@ -75,7 +80,7 @@ void testBrain() {
     b->addInputs(&ins);
 
     for (unsigned i = 0; i < numOut; i++) {
-        outs.push_back(new OutNeuron(0.8, 0.999));
+        outs.push_back(new OutNeuron(0.1, 0.99));
     }
     b->addOutputs(&outs);
 
@@ -113,11 +118,29 @@ void testBrain() {
     
     s.addCell(bs);
 
+
+    unsigned historyLength = 512;
+
+    float y = -4;
+
+    for (unsigned i = 0; i < b->ins.size(); i++) {
+        NeuronBarGraph* bg = new NeuronBarGraph(&s, new btVector3(0,y,0), b->ins[i] , 12.0, historyLength);
+        s.addCell(bg);
+        y-=2;
+    }
+
+    for (unsigned o = 0; o < b->outs.size(); o++) {
+        NeuronBarGraph* bg = new NeuronBarGraph(&s, new btVector3(0,y,0), b->outs[o] , 12.0, historyLength);
+        s.addCell(bg);
+        y-=2;
+    }
+
     glutmain(0, NULL, 1920, 1080, "SpaceGraphC", &s);
 
 }
 
 void initMP() {
+
     omp_set_num_threads(4);
 }
 

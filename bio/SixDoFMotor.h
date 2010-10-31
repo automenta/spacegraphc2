@@ -41,6 +41,9 @@ public:
 
         double a1 = outs[0]->getOutput();
         double a2 = outs[1]->getOutput();
+
+        printf("%f %f\n", a1, a2);
+        
         //double l = outs[2]->getOutput();
 
         //double angle1 = smoothing * a1 + (1.0 - smoothing) * lastAngle1;
@@ -62,10 +65,14 @@ public:
         //constraint->setAngularLowerLimit(btVector3(-angularScale/2, -angularScale/2, -angularScale/2));
         //constraint->setAngularUpperLimit(btVector3(angularScale/2, angularScale/2, angularScale/2));
 
-        constraint->getTranslationalLimitMotor()->m_currentLimit[0] = xmax;
         constraint->getTranslationalLimitMotor()->m_lowerLimit.setX(xmax);
         constraint->getTranslationalLimitMotor()->m_upperLimit.setX(xmax);
-        constraint->getTranslationalLimitMotor()->m_enableMotor[0] = false;
+        constraint->getTranslationalLimitMotor()->m_currentLimit[0] = xmax;
+        constraint->getTranslationalLimitMotor()->m_enableMotor[0] = true;
+        constraint->getTranslationalLimitMotor()->m_currentLimit[1] = xmax;
+        constraint->getTranslationalLimitMotor()->m_enableMotor[1] = true;
+        constraint->getTranslationalLimitMotor()->m_currentLimit[2] = xmax;
+        constraint->getTranslationalLimitMotor()->m_enableMotor[2] = true;
 
         //setLimit: 0..2 are linear limits, 3..5 are angular limits
         constraint->setLimit(0, 0, 0);
@@ -111,6 +118,77 @@ public:
 private:
 
 };
+
+
+class BalancedSixDoFRotator : public NOutput {
+    btGeneric6DofConstraint* constraint;
+
+    float normalLength;
+    float angularScale;
+    float angularStimulation;
+    float decayRate;
+
+public:
+
+    BalancedSixDoFRotator(Brain* b, btGeneric6DofConstraint* _constraint, float _angularScale, float _angularStimulation, float _decayRate) :
+    NOutput(b, 6), constraint(_constraint), normalLength(0), angularScale(_angularScale),
+     angularStimulation(_angularStimulation), decayRate(_decayRate) {
+
+
+    }
+
+    virtual void process(double dt) {
+        for (unsigned o = 0; o < 6; o++) {
+            outs[o]->setStimulationFactor(angularStimulation);
+            outs[o]->setDecay(decayRate);
+        }
+
+        double a1Plus = outs[0]->getOutput();
+        double a1Neg = outs[1]->getOutput();
+        double a2Plus = outs[2]->getOutput();
+        double a2Neg = outs[3]->getOutput();
+        double a3Plus = outs[4]->getOutput();
+        double a3Neg = outs[5]->getOutput();
+
+
+        constraint->getTranslationalLimitMotor()->m_lowerLimit.setX(0);
+        constraint->getTranslationalLimitMotor()->m_upperLimit.setX(0);
+        constraint->getTranslationalLimitMotor()->m_currentLimit[0] = 0;
+        constraint->getTranslationalLimitMotor()->m_enableMotor[0] = true;
+        constraint->getTranslationalLimitMotor()->m_currentLimit[1] = 0;
+        constraint->getTranslationalLimitMotor()->m_enableMotor[1] = true;
+        constraint->getTranslationalLimitMotor()->m_currentLimit[2] = 0;
+        constraint->getTranslationalLimitMotor()->m_enableMotor[2] = true;
+
+        //setLimit: 0..2 are linear limits, 3..5 are angular limits
+        constraint->setLimit(0, 0, 0);
+        constraint->setLimit(1, 0, 0);
+        constraint->setLimit(2, 0, 0);
+
+        float currentAngle1 = (a1Plus - a1Neg) * angularScale;
+        constraint->getRotationalLimitMotor(0)->m_currentPosition = currentAngle1;
+        constraint->setLimit(3+0, currentAngle1, currentAngle1);
+        constraint->getRotationalLimitMotor(0)->m_enableMotor = true;
+
+        float currentAngle2 = (a2Plus - a2Neg) * angularScale;
+        constraint->getRotationalLimitMotor(1)->m_currentPosition = currentAngle2;
+        constraint->setLimit(3+1, currentAngle2, currentAngle2);
+        constraint->getRotationalLimitMotor(1)->m_enableMotor = true;
+
+        float currentAngle3 = (a3Plus - a3Neg) * angularScale;
+        constraint->getRotationalLimitMotor(2)->m_currentPosition = currentAngle3;
+        constraint->setLimit(3+2, currentAngle3, currentAngle3);
+        constraint->getRotationalLimitMotor(2)->m_enableMotor = true;
+
+    }
+
+    virtual ~BalancedSixDoFRotator() {
+
+    }
+private:
+
+};
+
 
 class ImpulseMotor : public NOutput {
     btRigidBody* body;
