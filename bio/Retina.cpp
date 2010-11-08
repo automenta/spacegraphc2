@@ -182,15 +182,19 @@ void Retina::update(double dt) {
                 upRay = hor.cross(forwardRay);
                 upRay.normalize();
 
-                btVector3 to = (tr.getOrigin() + forwardRay * visionDistance) - (0.5f * hor*vDistance) + (0.5f * upRay*vDistance);
+                btVector3 to = (tr.getOrigin() + forwardRay * visionDistance) - (0.5f * hor * retinaWidth) + (0.5f * upRay * retinaHeight);
+                btVector3 toOffset = retinaWidth * (((float) x) / ((float) width)) * hor;
+                toOffset -= retinaHeight * (((float) y) / ((float) height)) * upRay;
+                to += toOffset;
 
-                to += retinaWidth * (((float) x) / ((float) width)) * hor;
-                to -= retinaHeight * (((float) y) / ((float) height)) * upRay;
+                //display the texture at half the visionDistance
+                btVector3 toVisible = (tr.getOrigin() + forwardRay * visionDistance/2.0) - (0.5f * hor * retinaWidth) + (0.5f * upRay * retinaHeight);
+                toVisible += toOffset;
 
-                if ((x == 0) && (y == 0)) toBL = to;
-                if ((x == width - 1) && (y == 0)) toBR = to;
-                if ((y == height - 1) && (x == 0)) toUL = to;
-                if ((y == height - 1) && (x == width - 1)) toUR = to;
+                if ((x == 0) && (y == 0)) toBL = toVisible;
+                if ((x == width - 1) && (y == 0)) toBR = toVisible;
+                if ((y == height - 1) && (x == 0)) toUL = toVisible;
+                if ((y == height - 1) && (x == width - 1)) toUR = toVisible;
 
                 CastResult r = rayCast->cast(from, to);
                 if (r.hit) {
@@ -205,11 +209,12 @@ void Retina::update(double dt) {
             }
 
             btVector4* cp = &(pixel[x][y]);
-            double zd = cp->w();
 
-            texture[textureIndex++] = (GLubyte) (255.0 * cp->x() * zd );
-            texture[textureIndex++] = (GLubyte) (255.0 * cp->y() * zd );
-            texture[textureIndex++] = (GLubyte) (255.0 * cp->z() * zd );
+            double zd = cp->w()*0.1 + 0.9;
+
+            texture[textureIndex++] = (GLubyte) (255.0 * ((float)cp->x()) * zd );
+            texture[textureIndex++] = (GLubyte) (255.0 * ((float)cp->y()) * zd );
+            texture[textureIndex++] = (GLubyte) (255.0 * ((float)cp->z()) * zd );
 
             ins[input++]->setInput(cp->x());
             ins[input++]->setInput(cp->y());

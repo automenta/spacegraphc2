@@ -10,20 +10,20 @@
 
 #include "Cell.h"
 
-class Bench : public Cell {
+class ColorBox : public Cell {
 public:
     
-    Bench (Spacegraph* s, const btVector3& positionOffset /* length, width, height, ... */) : Cell(s)
+    ColorBox (Spacegraph* s, float w, float h, float d, const btVector3& positionOffset, /* length, width, height, ... */ float r, float g, float b) : Cell(s)
     {
         btTransform offset; offset.setIdentity();
 	offset.setOrigin(positionOffset);
 
-        btBoxShape* baseShape = new btBoxShape(btVector3(0.35, 0.25, 0.85));
+        btBoxShape* baseShape = new btBoxShape(btVector3(w, h, d));
         btTransform transform;
         transform.setIdentity();
         transform.setOrigin(btVector3(0,2,0));
 
-        btRigidBody* base = addNewBody(btScalar(15.), offset/**transform*/, baseShape);
+        btRigidBody* base = addNewBody(btScalar(15.), offset/**transform*/, baseShape, r, g, b);
         base->setDamping(0.05, 0.85);
         base->setDeactivationTime(0.8);
         base->setSleepingThresholds(1.6, 2.5);

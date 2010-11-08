@@ -65,6 +65,7 @@ class Spacegraph : public GlutDemoApplication
         float nextAzi;
         float nextDist;
         float minDist;
+        btVector3 cameraTargetNext;
 
 public:
         map<btRigidBody*, BodyProcess*>* bodyProcess;
@@ -74,10 +75,12 @@ public:
             m_shapeDrawer = renderer;
             bodyProcess = new map<btRigidBody*, BodyProcess*>();
 
-            m_frustumZNear = 0.5f;
+            m_frustumZNear = 0.25f;
             rotationMomentum = 0.95f;
             distMomentum = 0.95f;
             minDist = 0.1f;
+
+            cameraTargetNext = m_cameraTargetPosition;
 
             physicsEnabled = true;
         }

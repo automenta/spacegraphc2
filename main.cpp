@@ -26,6 +26,29 @@ using namespace std;
 #include "BrainSpace.h"
 #include "Spider.h"
 
+void addWall(Spacegraph* s, double w, double thick) {
+    double z = thick*4.0;
+    s->addCell(new ColorBox(s, thick, thick, w/2.0, btVector3(-w/2.0, z, 0), 0.5, 0.5, 0.5));
+    s->addCell(new ColorBox(s, thick, thick, w/2.0, btVector3(w/2.0, z, 0), 0.5, 0.5, 0.5));
+    s->addCell(new ColorBox(s, w/2.0-thick, thick, thick, btVector3(0, z, w/2.0), 0.5, 0.5, 0.5));
+    s->addCell(new ColorBox(s, w/2.0-thick, thick, thick, btVector3(0, z, -w/2.0), 0.5, 0.5, 0.5));
+}
+
+void addRandomBlocks(Spacegraph* s, unsigned num) {
+    for (unsigned j = 0; j < num; j++) {
+        float x = frand(-8.0, 8.0);
+        float y = frand(-8.0, 8.0);
+        float w = frand(0.25, 1.0);
+        float h = frand(0.25, 1.0);
+        float d = frand(0.25, 1.0);
+        float r = frand(0, 1.0);
+        float g = frand(0, 1.0);
+        float b = frand(0, 1.0);
+        s->addCell(new ColorBox(s, w, h, d, btVector3(x, 5.0, y), r, g, b));
+    }
+
+}
+
 void eden() {
     Spacegraph s;
 
@@ -37,10 +60,11 @@ void eden() {
 
     //s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
     //s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
+    //s.addCell(new Snake(&s, btVector3(1.7, 1.9, -1.6), 15, 0.2, 0.1));
 
-    s.addCell(new Bench(&s, btVector3(1.7, 1.9, 1.6)));
+    addWall(&s, 16, 0.5);
+    addRandomBlocks(&s, 8);
 
-    s.addCell(new Snake(&s, btVector3(1.7, 1.9, -1.6), 15, 0.2, 0.1));
 
     for (unsigned i = 1; i < 2; i++)
     {
@@ -62,9 +86,8 @@ void eden() {
 //        legLengths.push_back(0.09);  legRadii.push_back(0.2);
 
 
-        Spider* spider = new Spider(&s, 1+i, &legLengths, &legRadii, btVector3(-1.7+i*2, 0.9, -1.6), 8, 12000, 4, 16);
+        Spider* spider = new Spider(&s, 2+i, &legLengths, &legRadii, btVector3(-1.7+i*2, 0.9, -1.6), 16, 48000, 3, 12);
         s.addCell(spider);
-
 
     }
 

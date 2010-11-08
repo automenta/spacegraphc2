@@ -32,8 +32,8 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
 
     float fLegDensity = 0.2;
 
-    float motorStrength = 0.005;  //amount that each spike actuates a motor
-    float motorDecay = 0.99; //lower = returns to zero (stillness) quicker, higher = returns to zero slower... between [0,1.0]
+    float motorStrength = 0.001;  //amount that each spike actuates a motor
+    float motorDecay = 0.98; //lower = returns to zero (stillness) quicker, higher = returns to zero slower... between [0,1.0]
 
     double partSeparationFactor = 1.05;
 
@@ -93,7 +93,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
             if (j == PARTS_PER_LEG-1) {
 
                 Retina* r = new Retina(brain, s, legPartBody, retinaSize, retinaSize, 1.0, 3, M_PI/2.0);
-                r->originOffset = btVector3(0, 0, fLegLength);
+                r->originOffset = btVector3(0, 0, 0);
                 r->forwardSign = -1;
                 retinas.push_back( r );
                 addProcess(r);
@@ -102,8 +102,9 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
                 //impulseControllers.push_back(hl);
             }
             else /*if (j == 0)*/ {
+                float touchDistance = 0.5;
                 {
-                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, 0.25, M_PI/8.0);
+                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, touchDistance, M_PI/8.0);
                     r->basisForward = 0;
                     r->basisUp = 1;
                     r->originOffset = btVector3(0, 0, 0);
@@ -112,7 +113,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
                     addProcess(r);
                 }
                 {
-                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, 0.25, M_PI/8.0);
+                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, touchDistance, M_PI/8.0);
                     r->basisForward = 0;
                     r->basisUp = 1;
                     r->forwardSign = -1;

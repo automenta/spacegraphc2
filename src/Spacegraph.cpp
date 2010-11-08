@@ -152,6 +152,7 @@ void Spacegraph::updateCamera() {
     m_ele = lerp(m_ele, nextEle, rotationMomentum);
     m_azi = lerp(m_azi, nextAzi, rotationMomentum);
     m_cameraDistance = lerp(m_cameraDistance, nextDist, distMomentum);
+    m_cameraTargetPosition = m_cameraTargetPosition.lerp(cameraTargetNext, 0.05);
 
     btScalar rele = m_ele * btScalar(0.01745329251994329547); // rads per deg
     btScalar razi = m_azi * btScalar(0.01745329251994329547); // rads per deg
@@ -280,15 +281,6 @@ void Spacegraph::mouseFunc(int button, int state, int x, int y) {
     btVector3 rayTo = getRayTo(x, y);
 
     switch (button) {
-        case 2:
-        {
-            
-//            if (state == 0) {
-//
-//                shootBox(rayTo);
-//            }
-            break;
-        };
         case 1:
         {
 
@@ -323,8 +315,10 @@ void Spacegraph::mouseFunc(int button, int state, int x, int y) {
             }
             break;
         }
+        case 2:
         case 0:
         {
+
             if (state == 0) {
 
 
@@ -346,74 +340,81 @@ void Spacegraph::mouseFunc(int button, int state, int x, int y) {
 
                         btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
                         if (body) {
-                            //other exclusions?
-                            if (!(body->isStaticObject() || body->isKinematicObject())) {
-                                touchedBody = body;
-                                touchedBody->setActivationState(DISABLE_DEACTIVATION);
+                            if (button == 2) {
+                                //printf("zooming to: %p\n", body);
+                                
+                                btScalar radius;
+                                body->getRootCollisionShape()->getBoundingSphere(cameraTargetNext, radius);
+                                cameraTargetNext = body->getWorldTransform().getOrigin();
+                                float d = radius * 1.5 + m_frustumZNear;
+                                if (d < m_frustumZNear) d= m_frustumZNear;
+                                
+                                nextDist = d;
+                            }
+                            else if (button == 0) {
+                                //other exclusions?
+                                if (!(body->isStaticObject() || body->isKinematicObject())) {
+                                    touchedBody = body;
+                                    touchedBody->setActivationState(DISABLE_DEACTIVATION);
 
 
-                                btVector3 pickPos = rayCallback.m_hitPointWorld;
-                                printf("pickPos=%f,%f,%f\n", pickPos.getX(), pickPos.getY(), pickPos.getZ());
+                                    btVector3 pickPos = rayCallback.m_hitPointWorld;
+                                    //printf("pickPos=%f,%f,%f\n", pickPos.getX(), pickPos.getY(), pickPos.getZ());
+
+                                    btVector3 localPivot = body->getCenterOfMassTransform().inverse() * pickPos;
+
+                                    if (use6Dof) {
+                                        btTransform tr;
+                                        tr.setIdentity();
+                                        tr.setOrigin(localPivot);
+                                        btGeneric6DofConstraint* dof6 = new btGeneric6DofConstraint(*body, tr, false);
+                                        dof6->setLinearLowerLimit(btVector3(0, 0, 0));
+                                        dof6->setLinearUpperLimit(btVector3(0, 0, 0));
+                                        dof6->setAngularLowerLimit(btVector3(0, 0, 0));
+                                        dof6->setAngularUpperLimit(btVector3(0, 0, 0));
+
+                                        m_dynamicsWorld->addConstraint(dof6);
+                                        m_pickConstraint = dof6;
+
+                                        dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 0);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 1);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 2);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 3);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 4);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 5);
+
+                                        dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 0);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 1);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 2);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 3);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 4);
+                                        dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 5);
+                                    } else {
+                                        btPoint2PointConstraint* p2p = new btPoint2PointConstraint(*body, localPivot);
+                                        m_dynamicsWorld->addConstraint(p2p);
+                                        m_pickConstraint = p2p;
+                                        p2p->m_setting.m_impulseClamp = mousePickClampingX;
+                                        //very weak constraint for picking
+                                        p2p->m_setting.m_tau = 0.001f;
+                                        /*
+                                                                                                                p2p->setParam(BT_CONSTRAINT_CFM,0.8,0);
+                                                                                                                p2p->setParam(BT_CONSTRAINT_CFM,0.8,1);
+                                                                                                                p2p->setParam(BT_CONSTRAINT_CFM,0.8,2);
+                                                                                                                p2p->setParam(BT_CONSTRAINT_ERP,0.1,0);
+                                                                                                                p2p->setParam(BT_CONSTRAINT_ERP,0.1,1);
+                                                                                                                p2p->setParam(BT_CONSTRAINT_ERP,0.1,2);
+                                         */
 
 
-                                btVector3 localPivot = body->getCenterOfMassTransform().inverse() * pickPos;
+                                    }
+                                    use6Dof = !use6Dof;
 
+                                    //save mouse position for dragging
+                                    xOldPickingPos = rayTo;
+                                    touchPos = pickPos;
 
-
-
-
-
-                                if (use6Dof) {
-                                    btTransform tr;
-                                    tr.setIdentity();
-                                    tr.setOrigin(localPivot);
-                                    btGeneric6DofConstraint* dof6 = new btGeneric6DofConstraint(*body, tr, false);
-                                    dof6->setLinearLowerLimit(btVector3(0, 0, 0));
-                                    dof6->setLinearUpperLimit(btVector3(0, 0, 0));
-                                    dof6->setAngularLowerLimit(btVector3(0, 0, 0));
-                                    dof6->setAngularUpperLimit(btVector3(0, 0, 0));
-
-                                    m_dynamicsWorld->addConstraint(dof6);
-                                    m_pickConstraint = dof6;
-
-                                    dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 0);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 1);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 2);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 3);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 4);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_CFM, 0.8, 5);
-
-                                    dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 0);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 1);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 2);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 3);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 4);
-                                    dof6->setParam(BT_CONSTRAINT_STOP_ERP, 0.1, 5);
-                                } else {
-                                    btPoint2PointConstraint* p2p = new btPoint2PointConstraint(*body, localPivot);
-                                    m_dynamicsWorld->addConstraint(p2p);
-                                    m_pickConstraint = p2p;
-                                    p2p->m_setting.m_impulseClamp = mousePickClampingX;
-                                    //very weak constraint for picking
-                                    p2p->m_setting.m_tau = 0.001f;
-                                    /*
-                                                                                                            p2p->setParam(BT_CONSTRAINT_CFM,0.8,0);
-                                                                                                            p2p->setParam(BT_CONSTRAINT_CFM,0.8,1);
-                                                                                                            p2p->setParam(BT_CONSTRAINT_CFM,0.8,2);
-                                                                                                            p2p->setParam(BT_CONSTRAINT_ERP,0.1,0);
-                                                                                                            p2p->setParam(BT_CONSTRAINT_ERP,0.1,1);
-                                                                                                            p2p->setParam(BT_CONSTRAINT_ERP,0.1,2);
-                                     */
-
-
+                                    xOldPickingDist = (pickPos - rayFrom).length();
                                 }
-                                use6Dof = !use6Dof;
-
-                                //save mouse position for dragging
-                                xOldPickingPos = rayTo;
-                                touchPos = pickPos;
-
-                                xOldPickingDist = (pickPos - rayFrom).length();
                             }
                         }
                     }
