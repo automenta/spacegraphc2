@@ -10,8 +10,6 @@
 CellProcess::CellProcess() {
 }
 
-CellProcess::CellProcess(const CellProcess& orig) {
-}
 
 CellProcess::~CellProcess() {
 }

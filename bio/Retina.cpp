@@ -7,38 +7,248 @@
 
 #include "Retina.h"
 
-Raycast::Raycast(btDynamicsWorld* btWorld)
-{
-	btDynWorld = btWorld;
+void Retina::draw() {
+    if (!textureCreated) {
+        glGenTextures(1, &textureID);
+
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+        textureCreated = true;
+    }
+
+    glPushMatrix();
+
+    glColor3f(1, 1, 1);
+
+    {
+        glBegin(GL_LINES);
+        //pyramid base
+        glVertex3f(from.x(), from.y(), from.z());
+        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+
+        glVertex3f(from.x(), from.y(), from.z());
+        glVertex3f(toUR.x(), toUR.y(), toUR.z());
+
+        glVertex3f(from.x(), from.y(), from.z());
+        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+
+        glVertex3f(from.x(), from.y(), from.z());
+        glVertex3f(toBL.x(), toBL.y(), toBL.z());
+
+
+        //diagonals
+        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+        glVertex3f(toUR.x(), toUR.y(), toUR.z());
+
+        glVertex3f(toUR.x(), toUR.y(), toUR.z());
+        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+
+        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+        glVertex3f(toBL.x(), toBL.y(), toBL.z());
+
+        glVertex3f(toBL.x(), toBL.y(), toBL.z());
+        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+
+        glEnd();
+
+    }
+
+
+    //texture pyramid base
+    {
+
+        glEnable(GL_TEXTURE_2D);
+
+        glBindTexture(GL_TEXTURE_2D, textureID);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texture);
+
+        glBegin(GL_POLYGON);
+
+        glTexCoord2f(1.0, 1.0);
+        glVertex3f(toUR.x(), toUR.y(), toUR.z());
+
+        glTexCoord2f(0.0, 1.0);
+        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+
+        glTexCoord2f(0.0, 0.0);
+        glVertex3f(toBL.x(), toBL.y(), toBL.z());
+
+        glTexCoord2f(1.0, 0.0);
+        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+
+        glEnd();
+        glDisable(GL_TEXTURE_2D);
+
+    }
+
+
+    glPopMatrix();
 }
 
-CastResult Raycast::cast(const btVector3& rayFrom, const btVector3& rayTo)
-{
-	result.hit = false;
+btVector4 Retina::getColor(CastResult res, btScalar d, float vDistance) {
+    double pd = (1.0 - (d / vDistance));
+    btCollisionObject* c = res.hitBody;
+    if (c!=NULL) {
+        btRigidBody* rb = (btRigidBody*) res.hitBody;
+        if (rb!=NULL) {
+            BodyProcess* bp = space->getProcess(rb);
+            if (bp != NULL) {
+                return btVector4(bp->color.x(), bp->color.y(), bp->color.z(), pd);
+            }
+        }
+    }
+    
+    return btVector4(0.5, 0.5, 0.5, pd);
 
-	btCollisionWorld::ClosestRayResultCallback resultCallback(rayFrom,rayTo);
-	btDynWorld->rayTest(rayFrom,rayTo,resultCallback);
-
-	if (resultCallback.hasHit())
-	{
-// 		cerr << "1 true" << endl;
-		result.hitBody = resultCallback.m_collisionObject;
-		result.hit = true;
-		result.hitPosition = resultCallback.m_hitPointWorld;
-
-/*		if ( result.hitBody )
-		{
-			cerr << "2 true" << endl;
-			result.hit = true;
-			result.hitPosition = resultCallback.m_hitPointWorld;
-		}*/
-	}
-
-	return result;
 }
 
-Raycast::~Raycast()
-{
+void Retina::update(double dt) {
+
+    btTransform tr = eyePart->getWorldTransform();
+
+    unsigned input = 0, x;
+
+
+//    float focus = outs[0]->getOutput();
+//    float focusScale = 0.01;
+//    float vDistance = (visionDistance / 2.0) * (1.0 + focus * focusScale);
+    float vDistance = visionDistance;
+
+    float retinaDimension = vDistance * sin(focusAngle);
+    if (width > height) {
+        retinaWidth = retinaDimension;
+        retinaHeight = retinaDimension * (float(height) / float(width));
+    } else {
+        retinaHeight = retinaDimension;
+        retinaWidth = retinaDimension * (float(width) / float(height));
+    }
+
+    unsigned textureIndex = 0;
+
+    //#pragma omp parallel for
+    for (x = 0; x < width; x++) {
+        unsigned ip = (p++) % (timeScale);
+        for (unsigned y = 0; y < height; y++) {
+            double dist;
+
+            if (!(frand(0, 1.0) <= proportionFired)) {
+                if (antialias) {
+                    if (x > 0)
+                        if (y > 0)
+                            if (x < width - 1)
+                                if (y < height - 1) {
+                                    //anti-alias
+                                    float r = pixel[x - 1][y].getX() + pixel[x + 1][y].getX() + pixel[x][y - 1].getX() + pixel[x][y + 1].getX() + pixel[x - 1][y - 1].getX() + pixel[x + 1][y + 1].getX() + pixel[x - 1][y - 1].getX() + pixel[x + 1][y + 1].getX();
+                                    float g = pixel[x - 1][y].getY() + pixel[x + 1][y].getY() + pixel[x][y - 1].getY() + pixel[x][y + 1].getY() + pixel[x - 1][y - 1].getY() + pixel[x + 1][y + 1].getY() + pixel[x - 1][y - 1].getY() + pixel[x + 1][y + 1].getY();
+                                    float b = pixel[x - 1][y].getZ() + pixel[x + 1][y].getZ() + pixel[x][y - 1].getZ() + pixel[x][y + 1].getZ() + pixel[x - 1][y - 1].getZ() + pixel[x + 1][y + 1].getZ() + pixel[x - 1][y - 1].getZ() + pixel[x + 1][y + 1].getZ();
+                                    r /= 8.0;
+                                    g /= 8.0;
+                                    b /= 8.0;
+                                    pixel[x][y] = btVector4(r, g, b, 1.0);
+                                }
+                }
+            } else {
+
+                from = eyePart->getWorldTransform().getOrigin() + originOffset;
+
+                btVector3 forwardRay(
+                        tr.getBasis()[0][basisForward],
+                        tr.getBasis()[1][basisForward],
+                        tr.getBasis()[2][basisForward]);
+                forwardRay *= forwardSign;
+
+                btVector3 upRay(
+                        tr.getBasis()[0][basisUp],
+                        tr.getBasis()[1][basisUp],
+                        tr.getBasis()[2][basisUp]);
+
+                forwardRay.normalize();
+                upRay.normalize();
+
+                //                    cout << forwardRay.x() << "," << forwardRay.y() << "," << forwardRay.z() << "  ";
+                //                    cout << upRay.x() << "," << upRay.y() << "," << upRay.z() << "\n";
+
+                btVector3 hor = forwardRay.cross(upRay);
+                hor.normalize();
+
+                upRay = hor.cross(forwardRay);
+                upRay.normalize();
+
+                btVector3 to = (tr.getOrigin() + forwardRay * visionDistance) - (0.5f * hor*vDistance) + (0.5f * upRay*vDistance);
+
+                to += retinaWidth * (((float) x) / ((float) width)) * hor;
+                to -= retinaHeight * (((float) y) / ((float) height)) * upRay;
+
+                if ((x == 0) && (y == 0)) toBL = to;
+                if ((x == width - 1) && (y == 0)) toBR = to;
+                if ((y == height - 1) && (x == 0)) toUL = to;
+                if ((y == height - 1) && (x == width - 1)) toUR = to;
+
+                CastResult r = rayCast->cast(from, to);
+                if (r.hit) {
+                    btScalar d = r.hitPosition.distance(from);
+                    dist = d;
+                    pixel[x][y] = getColor(r, d, vDistance);
+                } else {
+                    dist = vDistance;
+                    pixel[x][y] = btVector4(0, 0, 0, 0);
+                }
+
+            }
+
+            btVector4* cp = &(pixel[x][y]);
+            double zd = cp->w();
+
+            texture[textureIndex++] = (GLubyte) (255.0 * cp->x() * zd );
+            texture[textureIndex++] = (GLubyte) (255.0 * cp->y() * zd );
+            texture[textureIndex++] = (GLubyte) (255.0 * cp->z() * zd );
+
+            ins[input++]->setInput(cp->x());
+            ins[input++]->setInput(cp->y());
+            ins[input++]->setInput(cp->z());
+            ins[input++]->setInput(cp->w());
+
+        }
+    }
+    //printf("%d %d: %d\n", (int)width, (int)height, (int)textureIndex);
+}
+
+Raycast::Raycast(btDynamicsWorld* btWorld) {
+    btDynWorld = btWorld;
+}
+
+CastResult Raycast::cast(const btVector3& rayFrom, const btVector3& rayTo) {
+    result.hit = false;
+
+    btCollisionWorld::ClosestRayResultCallback resultCallback(rayFrom, rayTo);
+    btDynWorld->rayTest(rayFrom, rayTo, resultCallback);
+
+    if (resultCallback.hasHit()) {
+        // 		cerr << "1 true" << endl;
+        result.hitBody = resultCallback.m_collisionObject;
+        result.hit = true;
+        result.hitPosition = resultCallback.m_hitPointWorld;
+
+        /*		if ( result.hitBody )
+                        {
+                                cerr << "2 true" << endl;
+                                result.hit = true;
+                                result.hitPosition = resultCallback.m_hitPointWorld;
+                        }*/
+    }
+
+    return result;
+}
+
+Raycast::~Raycast() {
 }
 
 

@@ -57,7 +57,8 @@ class Spacegraph : public GlutDemoApplication
 
 	btDefaultCollisionConfiguration* m_collisionConfiguration;
 
-        map<btRigidBody*, BodyProcess*>* bodyProcess;
+
+        bool physicsEnabled;
         
         float rotationMomentum, distMomentum;
         float nextEle;
@@ -66,6 +67,7 @@ class Spacegraph : public GlutDemoApplication
         float minDist;
 
 public:
+        map<btRigidBody*, BodyProcess*>* bodyProcess;
 
         Spacegraph() : GlutDemoApplication() {
             renderer = new Renderer();
@@ -76,6 +78,8 @@ public:
             rotationMomentum = 0.95f;
             distMomentum = 0.95f;
             minDist = 0.1f;
+
+            physicsEnabled = true;
         }
 
         void setBodyProcess(btRigidBody* body, BodyProcess* process) {
@@ -87,7 +91,12 @@ public:
         }
 
         BodyProcess* getProcess(btRigidBody* body) {
+//            map<btRigidBody*,BodyProcess*>::iterator it = bodyProcess->find(body);
+//            if(it != bodyProcess->end()) {
+//               return it->second;
+//            }
             return (*bodyProcess)[body];
+//            return NULL;
         }
 
         btDynamicsWorld* getSpace() {

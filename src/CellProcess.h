@@ -11,7 +11,10 @@
 class CellProcess {
 public:
     CellProcess();
-    CellProcess(const CellProcess& orig);
+
+    virtual void update(double dt) {    }
+    virtual void draw() {    }
+
     virtual ~CellProcess();
 private:
 

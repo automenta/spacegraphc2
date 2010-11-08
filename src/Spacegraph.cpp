@@ -117,17 +117,19 @@ void Spacegraph::clientMoveAndDisplay() {
     if (ms > minFPS)
         ms = minFPS;
 
-    double dt = ms / 1000000.f;
-    if (m_dynamicsWorld) {
-        m_dynamicsWorld->stepSimulation(dt);
+    if (physicsEnabled) {
+        double dt = ms / 1000000.f;
+        if (m_dynamicsWorld) {
+            m_dynamicsWorld->stepSimulation(dt);
 
-        //optional but useful: debug drawing
-        m_dynamicsWorld->debugDrawWorld();
+            //optional but useful: debug drawing
+            m_dynamicsWorld->debugDrawWorld();
 
-    }
+        }
 
-    for (unsigned i = 0; i < cells.size(); i++) {
-        cells[i]->update(dt);
+        for (unsigned i = 0; i < cells.size(); i++) {
+            cells[i]->update(dt);
+        }
     }
 
     renderme();
@@ -237,12 +239,11 @@ void Spacegraph::displayCallback() {
 
 void Spacegraph::keyboardCallback(unsigned char key, int x, int y) {
     switch (key) {
-//        case 'e':
-//        {
-//            btVector3 startOffset(0, 2, 0);
-//            spawnRagdoll(startOffset);
-//            break;
-//        }
+        case 'z':
+        {
+            physicsEnabled = !physicsEnabled;
+            break;
+        }
         default:
             DemoApplication::keyboardCallback(key, x, y);
     }

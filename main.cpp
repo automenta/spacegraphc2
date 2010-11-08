@@ -38,10 +38,11 @@ void eden() {
     //s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
     //s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
 
-//    s.addCell(new Bench(&s, btVector3(1.7, 1.9, 1.6)));
+    s.addCell(new Bench(&s, btVector3(1.7, 1.9, 1.6)));
 
     s.addCell(new Snake(&s, btVector3(1.7, 1.9, -1.6), 15, 0.2, 0.1));
 
+    for (unsigned i = 1; i < 2; i++)
     {
         vector<btScalar> legLengths;
         vector<btScalar> legRadii;
@@ -51,9 +52,17 @@ void eden() {
         legLengths.push_back(0.11);  legRadii.push_back(0.29);
         legLengths.push_back(0.10);  legRadii.push_back(0.27);
         legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.2);
 
 
-        Spider* spider = new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 12000, 4, 16);
+        Spider* spider = new Spider(&s, 1+i, &legLengths, &legRadii, btVector3(-1.7+i*2, 0.9, -1.6), 8, 12000, 4, 16);
         s.addCell(spider);
 
 

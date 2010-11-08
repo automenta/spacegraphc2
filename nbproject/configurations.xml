@@ -907,7 +907,6 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <developmentMode>2</developmentMode>
           <incDir>
             <pElem>bullet-gl</pElem>
             <pElem>bullet-src</pElem>

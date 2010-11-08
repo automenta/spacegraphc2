@@ -117,7 +117,7 @@ public:
         if (i == target) return 1.0;
         //if (fabs(i-target) <= 1) return 0.25;
         //if (fabs(i-target) <= 2) return 0.125;
-        return -1.0;
+        return 0;
     }
 
     virtual ~NAngle() {

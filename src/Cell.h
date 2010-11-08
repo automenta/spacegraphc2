@@ -8,11 +8,13 @@
 #ifndef CELL_H
 #define	CELL_H
 
+#include <vector>
 #include <list>
 using namespace std;
 
 #include "Spacegraph.h"
 #include "BodyProcess.h"
+#include "CellProcess.h"
 #include "btBulletDynamicsCommon.h"
 
 
@@ -21,6 +23,7 @@ class Cell
 
 public:
         list<BodyProcess*>* processes;
+        vector<CellProcess*> cellProcesses;
 	btDynamicsWorld* m_ownerWorld;
         Spacegraph* spacegraph;
         btScalar defaultFriction;
@@ -83,15 +86,28 @@ public:
             spacegraph->removeBodyProcess(body);
         }
 
+        void addProcess(CellProcess *c) {
+            cellProcesses.push_back(c);
+        }
+
         virtual void update(double dt) {
             list<BodyProcess*>::iterator p = processes->begin();
             while(p != processes->end()){
                 (*p)->update(dt);
                 p++;
             }
+
+            unsigned j;
+            #pragma omp parallel for
+            for (j = 0; j < cellProcesses.size(); j++)
+                cellProcesses[j]->update(dt);
+
         }
 
-        virtual void draw() { }
+        virtual void draw() {
+            for (unsigned i = 0; i < cellProcesses.size(); i++)
+                cellProcesses[i]->draw();
+        }
 };
 
 

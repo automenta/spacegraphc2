@@ -22,9 +22,6 @@ using namespace std;
 #include "SixDoFMotor.h"
 #include "SineSound.h"
 
-#define GPS_HARMONICS 4
-#define SPACE_FREQ  0.1 //lower requires brains to be more sensitive but gives more dynamic range in the space
-
 
 class Spider : public Cell {
 
@@ -52,7 +49,7 @@ class Spider : public Cell {
     float headPhase;
 
 public:
-    vector<Retina*> legEye;
+    vector<Retina*> retinas;
     Brain* brain;
 
     vector<btRigidBody*> bodies;
@@ -101,12 +98,6 @@ public:
             partPos[i]->process(dt);
         }
 
-
-        unsigned j;
-        #pragma omp parallel for
-        for (j = 0; j < legEye.size(); j++)
-            legEye[j]->process(dt);
-
         //process brain
         unsigned brainSteps = 1;
         for (unsigned j = 0; j < brainSteps; j++) {
@@ -114,6 +105,7 @@ public:
             //printf("learned: %f\n", learned);
         }
 
+        unsigned j;
         for (j = 0; j < impulseControllers.size(); j++)
             impulseControllers[j]->process(dt);
 

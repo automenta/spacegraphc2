@@ -24,7 +24,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
     btVector3 vUp(0, 1, 0);
 
     // Setup geometry
-    float headRadius = 0.23f;
+    float headRadius = 0.15f;
     float headHeight = 0.015f;
     float headMass = 3.05;
 
@@ -32,7 +32,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
 
     float fLegDensity = 0.2;
 
-    float motorStrength = 0.1;  //amount that each spike actuates a motor
+    float motorStrength = 0.005;  //amount that each spike actuates a motor
     float motorDecay = 0.99; //lower = returns to zero (stillness) quicker, higher = returns to zero slower... between [0,1.0]
 
     double partSeparationFactor = 1.05;
@@ -84,21 +84,45 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
             //btCapsuleShape* legPart = new btCapsuleShape(btScalar(fLegRadius), btScalar(fLegLength));
             btBoxShape* legPart = new btBoxShape(btVector3(fLegRadius, fLegLength * 0.5, fLegRadius));
 
-            float r = 1.0;
-            float g = j % 2 ? 0.5 : 0.75;
+            float g = 0.0;
+            float r = j % 2 ? 0.5 : 0.75;
             float b = i % 2 ? 0.5 : 0.75;
 
             btRigidBody* legPartBody = addNewBody(btScalar(fLegMass), offset*transform, legPart, new BodyProcess(r, g, b));
 
-            //                if (j == PARTS_PER_LEG-1) {
-            //                    Retina* r = new Retina(brain, s->getSpace(), legPartBody, retinaSize, retinaSize, 0.78, 90);
-            //                    r->originOffset = btVector3(0, fLegLength, 0);
-            //                    legEye.push_back( r );
-            //
-            //                    //ImpulseMotor* hl = new ImpulseMotor(brain, legPartBody, 0.001, 0.001);
-            //                    //impulseControllers.push_back(hl);
-            //
-            //                }
+            if (j == PARTS_PER_LEG-1) {
+
+                Retina* r = new Retina(brain, s, legPartBody, retinaSize, retinaSize, 1.0, 3, M_PI/2.0);
+                r->originOffset = btVector3(0, 0, fLegLength);
+                r->forwardSign = -1;
+                retinas.push_back( r );
+                addProcess(r);
+
+                //ImpulseMotor* hl = new ImpulseMotor(brain, legPartBody, 0.001, 0.001);
+                //impulseControllers.push_back(hl);
+            }
+            else /*if (j == 0)*/ {
+                {
+                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, 0.25, M_PI/8.0);
+                    r->basisForward = 0;
+                    r->basisUp = 1;
+                    r->originOffset = btVector3(0, 0, 0);
+                    
+                    retinas.push_back( r );
+                    addProcess(r);
+                }
+                {
+                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, 0.25, M_PI/8.0);
+                    r->basisForward = 0;
+                    r->basisUp = 1;
+                    r->forwardSign = -1;
+                    r->originOffset = btVector3(0, 0, 0);
+
+                    retinas.push_back( r );
+                    addProcess(r);
+                }
+
+            }
 
             //                BodyScaleMotor* bm  = new BodyScaleMotor(brain, legPartBody, 15.5, 0.55);
             //                scaleControllers.push_back(bm);
