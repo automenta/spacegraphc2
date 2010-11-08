@@ -23,32 +23,33 @@ void Retina::draw() {
 
     {
         glBegin(GL_LINES);
-        //pyramid base
-        glVertex3f(from.x(), from.y(), from.z());
-        glVertex3f(toUL.x(), toUL.y(), toUL.z());
-
-        glVertex3f(from.x(), from.y(), from.z());
-        glVertex3f(toUR.x(), toUR.y(), toUR.z());
-
-        glVertex3f(from.x(), from.y(), from.z());
-        glVertex3f(toBR.x(), toBR.y(), toBR.z());
-
-        glVertex3f(from.x(), from.y(), from.z());
-        glVertex3f(toBL.x(), toBL.y(), toBL.z());
-
 
         //diagonals
+        glVertex3f(from.x(), from.y(), from.z());
         glVertex3f(toUL.x(), toUL.y(), toUL.z());
+
+        glVertex3f(from.x(), from.y(), from.z());
         glVertex3f(toUR.x(), toUR.y(), toUR.z());
 
-        glVertex3f(toUR.x(), toUR.y(), toUR.z());
+        glVertex3f(from.x(), from.y(), from.z());
         glVertex3f(toBR.x(), toBR.y(), toBR.z());
 
-        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+        glVertex3f(from.x(), from.y(), from.z());
         glVertex3f(toBL.x(), toBL.y(), toBL.z());
 
-        glVertex3f(toBL.x(), toBL.y(), toBL.z());
-        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+
+        //pyramid base
+        //        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+        //        glVertex3f(toUR.x(), toUR.y(), toUR.z());
+        //
+        //        glVertex3f(toUR.x(), toUR.y(), toUR.z());
+        //        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+        //
+        //        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+        //        glVertex3f(toBL.x(), toBL.y(), toBL.z());
+        //
+        //        glVertex3f(toBL.x(), toBL.y(), toBL.z());
+        //        glVertex3f(toUL.x(), toUL.y(), toUL.z());
 
         glEnd();
 
@@ -72,17 +73,17 @@ void Retina::draw() {
 
         glBegin(GL_POLYGON);
 
-        glTexCoord2f(1.0, 1.0);
-        glVertex3f(toUR.x(), toUR.y(), toUR.z());
-
-        glTexCoord2f(0.0, 1.0);
-        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+        glTexCoord2f(1.0, 0.0);
+        glVertex3f(toBR.x(), toBR.y(), toBR.z());
 
         glTexCoord2f(0.0, 0.0);
         glVertex3f(toBL.x(), toBL.y(), toBL.z());
 
-        glTexCoord2f(1.0, 0.0);
-        glVertex3f(toBR.x(), toBR.y(), toBR.z());
+        glTexCoord2f(0.0, 1.0);
+        glVertex3f(toUL.x(), toUL.y(), toUL.z());
+
+        glTexCoord2f(1.0, 1.0);
+        glVertex3f(toUR.x(), toUR.y(), toUR.z());
 
         glEnd();
         glDisable(GL_TEXTURE_2D);
@@ -96,16 +97,16 @@ void Retina::draw() {
 btVector4 Retina::getColor(CastResult res, btScalar d, float vDistance) {
     double pd = (1.0 - (d / vDistance));
     btCollisionObject* c = res.hitBody;
-    if (c!=NULL) {
+    if (c != NULL) {
         btRigidBody* rb = (btRigidBody*) res.hitBody;
-        if (rb!=NULL) {
+        if (rb != NULL) {
             BodyProcess* bp = space->getProcess(rb);
             if (bp != NULL) {
                 return btVector4(bp->color.x(), bp->color.y(), bp->color.z(), pd);
             }
         }
     }
-    
+
     return btVector4(0.5, 0.5, 0.5, pd);
 
 }
@@ -117,9 +118,9 @@ void Retina::update(double dt) {
     unsigned input = 0, x;
 
 
-//    float focus = outs[0]->getOutput();
-//    float focusScale = 0.01;
-//    float vDistance = (visionDistance / 2.0) * (1.0 + focus * focusScale);
+    //    float focus = outs[0]->getOutput();
+    //    float focusScale = 0.01;
+    //    float vDistance = (visionDistance / 2.0) * (1.0 + focus * focusScale);
     float vDistance = visionDistance;
 
     float retinaDimension = vDistance * sin(focusAngle);
@@ -187,14 +188,11 @@ void Retina::update(double dt) {
                 toOffset -= retinaHeight * (((float) y) / ((float) height)) * upRay;
                 to += toOffset;
 
-                //display the texture at half the visionDistance
-                btVector3 toVisible = (tr.getOrigin() + forwardRay * visionDistance/2.0) - (0.5f * hor * retinaWidth) + (0.5f * upRay * retinaHeight);
-                toVisible += toOffset;
 
-                if ((x == 0) && (y == 0)) toBL = toVisible;
-                if ((x == width - 1) && (y == 0)) toBR = toVisible;
-                if ((y == height - 1) && (x == 0)) toUL = toVisible;
-                if ((y == height - 1) && (x == width - 1)) toUR = toVisible;
+                if ((x == 0) && (y == 0)) toBL = to;
+                if ((x == width - 1) && (y == 0)) toBR = to;
+                if ((y == height - 1) && (x == 0)) toUL = to;
+                if ((y == height - 1) && (x == width - 1)) toUR = to;
 
                 CastResult r = rayCast->cast(from, to);
                 if (r.hit) {
@@ -212,9 +210,9 @@ void Retina::update(double dt) {
 
             double zd = cp->w()*0.1 + 0.9;
 
-            texture[textureIndex++] = (GLubyte) (255.0 * ((float)cp->x()) * zd );
-            texture[textureIndex++] = (GLubyte) (255.0 * ((float)cp->y()) * zd );
-            texture[textureIndex++] = (GLubyte) (255.0 * ((float)cp->z()) * zd );
+            texture[textureIndex++] = (GLubyte) (255.0 * ((float) cp->x()) * zd);
+            texture[textureIndex++] = (GLubyte) (255.0 * ((float) cp->y()) * zd);
+            texture[textureIndex++] = (GLubyte) (255.0 * ((float) cp->z()) * zd);
 
             ins[input++]->setInput(cp->x());
             ins[input++]->setInput(cp->y());

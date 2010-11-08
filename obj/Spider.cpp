@@ -92,7 +92,7 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
 
             if (j == PARTS_PER_LEG-1) {
 
-                Retina* r = new Retina(brain, s, legPartBody, retinaSize, retinaSize, 1.0, 3, M_PI/2.0);
+                Retina* r = new Retina(brain, s, legPartBody, retinaSize, retinaSize, 1.0, 8, M_PI/4.0);
                 r->originOffset = btVector3(0, 0, 0);
                 r->forwardSign = -1;
                 retinas.push_back( r );
@@ -117,6 +117,25 @@ Spider::Spider(Spacegraph* s, unsigned numLegs, vector<btScalar>* _legLengths, v
                     r->basisForward = 0;
                     r->basisUp = 1;
                     r->forwardSign = -1;
+                    r->originOffset = btVector3(0, 0, 0);
+
+                    retinas.push_back( r );
+                    addProcess(r);
+                }
+                {
+                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, touchDistance, M_PI/8.0);
+                    r->basisForward = 2;
+                    r->basisUp = 1;
+                    r->forwardSign = -1;
+                    r->originOffset = btVector3(0, 0, 0);
+
+                    retinas.push_back( r );
+                    addProcess(r);
+                }
+                {
+                    Retina* r = new Retina(brain, s, legPartBody, 2, 2, 1.0, touchDistance, M_PI/8.0);
+                    r->basisForward = 2;
+                    r->basisUp = 1;
                     r->originOffset = btVector3(0, 0, 0);
 
                     retinas.push_back( r );

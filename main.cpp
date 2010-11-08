@@ -34,13 +34,13 @@ void addWall(Spacegraph* s, double w, double thick) {
     s->addCell(new ColorBox(s, w/2.0-thick, thick, thick, btVector3(0, z, -w/2.0), 0.5, 0.5, 0.5));
 }
 
-void addRandomBlocks(Spacegraph* s, unsigned num) {
+void addRandomBlocks(Spacegraph* s, unsigned num, float minSize, float maxSize) {
     for (unsigned j = 0; j < num; j++) {
         float x = frand(-8.0, 8.0);
         float y = frand(-8.0, 8.0);
-        float w = frand(0.25, 1.0);
-        float h = frand(0.25, 1.0);
-        float d = frand(0.25, 1.0);
+        float w = frand(minSize, maxSize);
+        float h = frand(minSize, maxSize);
+        float d = frand(minSize, maxSize);
         float r = frand(0, 1.0);
         float g = frand(0, 1.0);
         float b = frand(0, 1.0);
@@ -54,20 +54,21 @@ void eden() {
 
     s.initPhysics();
 
-    s.getSpace()->setGravity(btVector3(0, -2.0, 0));
-
-    s.addGround();
+//    s.getSpace()->setGravity(btVector3(0, -4.0, 0));
+//
+//    s.addGround();
 
     //s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
     //s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
     //s.addCell(new Snake(&s, btVector3(1.7, 1.9, -1.6), 15, 0.2, 0.1));
 
-    addWall(&s, 16, 0.5);
-    addRandomBlocks(&s, 8);
+    addWall(&s, 12, 0.5);
+    addRandomBlocks(&s, 8, 0.25, 1.0);
+    addRandomBlocks(&s, 8, 0.05, 0.15);
 
 
-    for (unsigned i = 1; i < 2; i++)
-    {
+    //for (unsigned i = 1; i < 2; i++)
+    //{
         vector<btScalar> legLengths;
         vector<btScalar> legRadii;
         legLengths.push_back(0.2);  legRadii.push_back(0.35);
@@ -86,10 +87,10 @@ void eden() {
 //        legLengths.push_back(0.09);  legRadii.push_back(0.2);
 
 
-        Spider* spider = new Spider(&s, 2+i, &legLengths, &legRadii, btVector3(-1.7+i*2, 0.9, -1.6), 16, 48000, 3, 12);
+        Spider* spider = new Spider(&s, 1, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6),48, 86000, 2, 4);
         s.addCell(spider);
 
-    }
+    //}
 
     //s.getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
     glutmain(0, NULL, 1920, 1080, "SpaceGraphC", &s);
