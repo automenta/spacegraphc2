@@ -55,6 +55,8 @@ protected:
 	///constraint for mouse picking
 	btTypedConstraint*		m_pickConstraint;
 
+	virtual void removePickingConstraint();
+
 	btCollisionShape*	m_shootBoxShape;
 
 	float	m_cameraDistance;
@@ -76,6 +78,7 @@ protected:
 	float m_scaleFactor;
 	btVector3 m_cameraUp;
 	int	m_forwardAxis;
+	float m_zoomStepSize;
 
 	int m_glutScreenWidth;
 	int m_glutScreenHeight;

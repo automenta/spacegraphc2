@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2472/trunk/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia
+END
+premake4.lua
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2435/trunk/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/premake4.lua
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/2472/trunk/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/CMakeLists.txt
+END

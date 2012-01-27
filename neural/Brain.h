@@ -210,13 +210,13 @@ public:
         }
 
         // determine firing threshold
-        if (t->target != NULL) {
+        /*if (t->target != NULL) {
             t->firingThreshold = maxFiringThreshold;
             //an->maxDendridicBranches = maxDendridicBranches;
-        } else {
+        } else {*/
             t->firingThreshold = frand(minFiringThreshold, maxFiringThreshold);
             //an->maxDendridicBranches = irand(1, maxDendridicBranches);
-        }
+        //}
 
         //maximum that a synapse can multiply a signal. 1.0 = conserved
         t->maxSynapseWeight = maxSynapseWeight; //ex: 1.0
@@ -275,6 +275,7 @@ public:
         newNeurons.reserve(numNeurons);
 
         for (unsigned i = 0; i < numNeurons; i++) {
+            //Neuron* t = (i % 2 == 0) ? (Neuron*)new CritterdingNeuron() : (Neuron*)new IzhikevichNeuron();
             Neuron* t = new CritterdingNeuron();
             //Neuron* t = new IzhikevichNeuron();
 

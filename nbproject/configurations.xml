@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="69">
-  <logicalFolder name="root" displayName="root" projectFiles="true">
+<configurationDescriptor version="80">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="bio" displayName="bio" projectFiles="true">
       <itemPath>bio/BloodBrainInterface.cpp</itemPath>
       <itemPath>bio/BloodBrainInterface.h</itemPath>
@@ -18,14 +18,10 @@
       <itemPath>bio/SixDoFMotor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="bullet-gl" displayName="bullet-gl" projectFiles="true">
-      <logicalFolder name="CMakeFiles"
-                     displayName="CMakeFiles"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
+      <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
         <logicalFolder name="OpenGLSupport.dir"
                        displayName="OpenGLSupport.dir"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-gl/CMakeFiles/OpenGLSupport.dir/CXX.includecache</itemPath>
           <itemPath>bullet-gl/CMakeFiles/OpenGLSupport.dir/DependInfo.cmake</itemPath>
           <itemPath>bullet-gl/CMakeFiles/OpenGLSupport.dir/build.make</itemPath>
@@ -40,10 +36,7 @@
         <itemPath>bullet-gl/CMakeFiles/CMakeDirectoryInformation.cmake</itemPath>
         <itemPath>bullet-gl/CMakeFiles/progress.marks</itemPath>
       </logicalFolder>
-      <logicalFolder name="ibmsdk"
-                     displayName="ibmsdk"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
+      <logicalFolder name="ibmsdk" displayName="ibmsdk" projectFiles="true">
         <itemPath>bullet-gl/ibmsdk/Makefile</itemPath>
       </logicalFolder>
       <itemPath>bullet-gl/CMakeLists.txt</itemPath>
@@ -78,12 +71,10 @@
     <logicalFolder name="bullet-src" displayName="bullet-src" projectFiles="true">
       <logicalFolder name="BulletCollision"
                      displayName="BulletCollision"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
+                     projectFiles="true">
         <logicalFolder name="BroadphaseCollision"
                        displayName="BroadphaseCollision"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-src/BulletCollision/BroadphaseCollision/btAxisSweep3.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/BroadphaseCollision/btAxisSweep3.h</itemPath>
           <itemPath>bullet-src/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h</itemPath>
@@ -107,38 +98,27 @@
           <itemPath>bullet-src/BulletCollision/BroadphaseCollision/btSimpleBroadphase.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/BroadphaseCollision/btSimpleBroadphase.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="CMakeFiles"
-                       displayName="CMakeFiles"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
           <logicalFolder name="BulletCollision.dir"
                          displayName="BulletCollision.dir"
-                         projectFiles="true"
-                         kind="SOURCE_LOGICAL_FOLDER">
+                         projectFiles="true">
             <logicalFolder name="BroadphaseCollision"
                            displayName="BroadphaseCollision"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+                           projectFiles="true">
             </logicalFolder>
             <logicalFolder name="CollisionDispatch"
                            displayName="CollisionDispatch"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+                           projectFiles="true">
             </logicalFolder>
             <logicalFolder name="CollisionShapes"
                            displayName="CollisionShapes"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+                           projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="Gimpact"
-                           displayName="Gimpact"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+            <logicalFolder name="Gimpact" displayName="Gimpact" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="NarrowPhaseCollision"
                            displayName="NarrowPhaseCollision"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+                           projectFiles="true">
             </logicalFolder>
             <itemPath>bullet-src/BulletCollision/CMakeFiles/BulletCollision.dir/CXX.includecache</itemPath>
             <itemPath>bullet-src/BulletCollision/CMakeFiles/BulletCollision.dir/DependInfo.cmake</itemPath>
@@ -156,8 +136,7 @@
         </logicalFolder>
         <logicalFolder name="CollisionDispatch"
                        displayName="CollisionDispatch"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-src/BulletCollision/CollisionDispatch/SphereTriangleDetector.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionDispatch/SphereTriangleDetector.h</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.cpp</itemPath>
@@ -209,8 +188,7 @@
         </logicalFolder>
         <logicalFolder name="CollisionShapes"
                        displayName="CollisionShapes"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btBox2dShape.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btBox2dShape.h</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btBoxShape.cpp</itemPath>
@@ -236,6 +214,8 @@
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexInternalShape.h</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexPointCloudShape.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexPointCloudShape.h</itemPath>
+          <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexPolyhedron.cpp</itemPath>
+          <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexPolyhedron.h</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexShape.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexShape.h</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.cpp</itemPath>
@@ -286,10 +266,7 @@
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btUniformScalingShape.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/CollisionShapes/btUniformScalingShape.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="Gimpact"
-                       displayName="Gimpact"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="Gimpact" displayName="Gimpact" projectFiles="true">
           <itemPath>bullet-src/BulletCollision/Gimpact/btBoxCollision.h</itemPath>
           <itemPath>bullet-src/BulletCollision/Gimpact/btClipPolygon.h</itemPath>
           <itemPath>bullet-src/BulletCollision/Gimpact/btContactProcessing.cpp</itemPath>
@@ -329,16 +306,12 @@
           <itemPath>bullet-src/BulletCollision/Gimpact/gim_tri_collision.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/Gimpact/gim_tri_collision.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="ibmsdk"
-                       displayName="ibmsdk"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="ibmsdk" displayName="ibmsdk" projectFiles="true">
           <itemPath>bullet-src/BulletCollision/ibmsdk/Makefile</itemPath>
         </logicalFolder>
         <logicalFolder name="NarrowPhaseCollision"
                        displayName="NarrowPhaseCollision"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.h</itemPath>
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btConvexCast.cpp</itemPath>
@@ -359,6 +332,8 @@
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btPersistentManifold.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btPersistentManifold.h</itemPath>
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btPointCollector.h</itemPath>
+          <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp</itemPath>
+          <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.h</itemPath>
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp</itemPath>
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btRaycastCallback.h</itemPath>
           <itemPath>bullet-src/BulletCollision/NarrowPhaseCollision/btSimplexSolverInterface.h</itemPath>
@@ -374,43 +349,25 @@
       </logicalFolder>
       <logicalFolder name="BulletDynamics"
                      displayName="BulletDynamics"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
-        <logicalFolder name="Character"
-                       displayName="Character"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                     projectFiles="true">
+        <logicalFolder name="Character" displayName="Character" projectFiles="true">
           <itemPath>bullet-src/BulletDynamics/Character/btCharacterControllerInterface.h</itemPath>
           <itemPath>bullet-src/BulletDynamics/Character/btKinematicCharacterController.cpp</itemPath>
           <itemPath>bullet-src/BulletDynamics/Character/btKinematicCharacterController.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="CMakeFiles"
-                       displayName="CMakeFiles"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
           <logicalFolder name="BulletDynamics.dir"
                          displayName="BulletDynamics.dir"
-                         projectFiles="true"
-                         kind="SOURCE_LOGICAL_FOLDER">
-            <logicalFolder name="Character"
-                           displayName="Character"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+                         projectFiles="true">
+            <logicalFolder name="Character" displayName="Character" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="ConstraintSolver"
                            displayName="ConstraintSolver"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+                           projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="Dynamics"
-                           displayName="Dynamics"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+            <logicalFolder name="Dynamics" displayName="Dynamics" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="Vehicle"
-                           displayName="Vehicle"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+            <logicalFolder name="Vehicle" displayName="Vehicle" projectFiles="true">
             </logicalFolder>
             <itemPath>bullet-src/BulletDynamics/CMakeFiles/BulletDynamics.dir/CXX.includecache</itemPath>
             <itemPath>bullet-src/BulletDynamics/CMakeFiles/BulletDynamics.dir/DependInfo.cmake</itemPath>
@@ -428,8 +385,7 @@
         </logicalFolder>
         <logicalFolder name="ConstraintSolver"
                        displayName="ConstraintSolver"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-src/BulletDynamics/ConstraintSolver/btConeTwistConstraint.cpp</itemPath>
           <itemPath>bullet-src/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h</itemPath>
           <itemPath>bullet-src/BulletDynamics/ConstraintSolver/btConstraintSolver.h</itemPath>
@@ -460,14 +416,9 @@
           <itemPath>bullet-src/BulletDynamics/ConstraintSolver/btUniversalConstraint.cpp</itemPath>
           <itemPath>bullet-src/BulletDynamics/ConstraintSolver/btUniversalConstraint.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="Dynamics"
-                       displayName="Dynamics"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="Dynamics" displayName="Dynamics" projectFiles="true">
           <itemPath>bullet-src/BulletDynamics/Dynamics/Bullet-C-API.cpp</itemPath>
           <itemPath>bullet-src/BulletDynamics/Dynamics/btActionInterface.h</itemPath>
-          <itemPath>bullet-src/BulletDynamics/Dynamics/btContinuousDynamicsWorld.cpp</itemPath>
-          <itemPath>bullet-src/BulletDynamics/Dynamics/btContinuousDynamicsWorld.h</itemPath>
           <itemPath>bullet-src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp</itemPath>
           <itemPath>bullet-src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h</itemPath>
           <itemPath>bullet-src/BulletDynamics/Dynamics/btDynamicsWorld.h</itemPath>
@@ -476,16 +427,10 @@
           <itemPath>bullet-src/BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp</itemPath>
           <itemPath>bullet-src/BulletDynamics/Dynamics/btSimpleDynamicsWorld.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="ibmsdk"
-                       displayName="ibmsdk"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="ibmsdk" displayName="ibmsdk" projectFiles="true">
           <itemPath>bullet-src/BulletDynamics/ibmsdk/Makefile</itemPath>
         </logicalFolder>
-        <logicalFolder name="Vehicle"
-                       displayName="Vehicle"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="Vehicle" displayName="Vehicle" projectFiles="true">
           <itemPath>bullet-src/BulletDynamics/Vehicle/btRaycastVehicle.cpp</itemPath>
           <itemPath>bullet-src/BulletDynamics/Vehicle/btRaycastVehicle.h</itemPath>
           <itemPath>bullet-src/BulletDynamics/Vehicle/btVehicleRaycaster.h</itemPath>
@@ -498,20 +443,14 @@
       </logicalFolder>
       <logicalFolder name="BulletMultiThreaded"
                      displayName="BulletMultiThreaded"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
-        <logicalFolder name="CMakeFiles"
-                       displayName="CMakeFiles"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                     projectFiles="true">
+        <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
           <logicalFolder name="BulletMultiThreaded.dir"
                          displayName="BulletMultiThreaded.dir"
-                         projectFiles="true"
-                         kind="SOURCE_LOGICAL_FOLDER">
+                         projectFiles="true">
             <logicalFolder name="SpuNarrowPhaseCollisionTask"
                            displayName="SpuNarrowPhaseCollisionTask"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+                           projectFiles="true">
             </logicalFolder>
             <itemPath>bullet-src/BulletMultiThreaded/CMakeFiles/BulletMultiThreaded.dir/CXX.includecache</itemPath>
             <itemPath>bullet-src/BulletMultiThreaded/CMakeFiles/BulletMultiThreaded.dir/DependInfo.cmake</itemPath>
@@ -527,15 +466,11 @@
           <itemPath>bullet-src/BulletMultiThreaded/CMakeFiles/CMakeDirectoryInformation.cmake</itemPath>
           <itemPath>bullet-src/BulletMultiThreaded/CMakeFiles/progress.marks</itemPath>
         </logicalFolder>
-        <logicalFolder name="out"
-                       displayName="out"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="out" displayName="out" projectFiles="true">
         </logicalFolder>
         <logicalFolder name="SpuNarrowPhaseCollisionTask"
                        displayName="SpuNarrowPhaseCollisionTask"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-src/BulletMultiThreaded/SpuNarrowPhaseCollisionTask/Box.h</itemPath>
           <itemPath>bullet-src/BulletMultiThreaded/SpuNarrowPhaseCollisionTask/SpuCollisionShapes.cpp</itemPath>
           <itemPath>bullet-src/BulletMultiThreaded/SpuNarrowPhaseCollisionTask/SpuCollisionShapes.h</itemPath>
@@ -554,8 +489,7 @@
         </logicalFolder>
         <logicalFolder name="SpuSampleTask"
                        displayName="SpuSampleTask"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                       projectFiles="true">
           <itemPath>bullet-src/BulletMultiThreaded/SpuSampleTask/SpuSampleTask.cpp</itemPath>
           <itemPath>bullet-src/BulletMultiThreaded/SpuSampleTask/SpuSampleTask.h</itemPath>
           <itemPath>bullet-src/BulletMultiThreaded/SpuSampleTask/readme.txt</itemPath>
@@ -607,16 +541,11 @@
       </logicalFolder>
       <logicalFolder name="BulletSoftBody"
                      displayName="BulletSoftBody"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
-        <logicalFolder name="CMakeFiles"
-                       displayName="CMakeFiles"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+                     projectFiles="true">
+        <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
           <logicalFolder name="BulletSoftBody.dir"
                          displayName="BulletSoftBody.dir"
-                         projectFiles="true"
-                         kind="SOURCE_LOGICAL_FOLDER">
+                         projectFiles="true">
             <itemPath>bullet-src/BulletSoftBody/CMakeFiles/BulletSoftBody.dir/CXX.includecache</itemPath>
             <itemPath>bullet-src/BulletSoftBody/CMakeFiles/BulletSoftBody.dir/DependInfo.cmake</itemPath>
             <itemPath>bullet-src/BulletSoftBody/CMakeFiles/BulletSoftBody.dir/build.make</itemPath>
@@ -655,31 +584,18 @@
         <itemPath>bullet-src/BulletSoftBody/btSparseSDF.h</itemPath>
         <itemPath>bullet-src/BulletSoftBody/cmake_install.cmake</itemPath>
       </logicalFolder>
-      <logicalFolder name="CMakeFiles"
-                     displayName="CMakeFiles"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
+      <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
         <itemPath>bullet-src/CMakeFiles/CMakeDirectoryInformation.cmake</itemPath>
         <itemPath>bullet-src/CMakeFiles/progress.marks</itemPath>
       </logicalFolder>
-      <logicalFolder name="ibmsdk"
-                     displayName="ibmsdk"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
+      <logicalFolder name="ibmsdk" displayName="ibmsdk" projectFiles="true">
         <itemPath>bullet-src/ibmsdk/Makefile</itemPath>
       </logicalFolder>
-      <logicalFolder name="LinearMath"
-                     displayName="LinearMath"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
-        <logicalFolder name="CMakeFiles"
-                       displayName="CMakeFiles"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+      <logicalFolder name="LinearMath" displayName="LinearMath" projectFiles="true">
+        <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
           <logicalFolder name="LinearMath.dir"
                          displayName="LinearMath.dir"
-                         projectFiles="true"
-                         kind="SOURCE_LOGICAL_FOLDER">
+                         projectFiles="true">
             <itemPath>bullet-src/LinearMath/CMakeFiles/LinearMath.dir/CXX.includecache</itemPath>
             <itemPath>bullet-src/LinearMath/CMakeFiles/LinearMath.dir/DependInfo.cmake</itemPath>
             <itemPath>bullet-src/LinearMath/CMakeFiles/LinearMath.dir/build.make</itemPath>
@@ -694,10 +610,7 @@
           <itemPath>bullet-src/LinearMath/CMakeFiles/CMakeDirectoryInformation.cmake</itemPath>
           <itemPath>bullet-src/LinearMath/CMakeFiles/progress.marks</itemPath>
         </logicalFolder>
-        <logicalFolder name="ibmsdk"
-                       displayName="ibmsdk"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="ibmsdk" displayName="ibmsdk" projectFiles="true">
           <itemPath>bullet-src/LinearMath/ibmsdk/Makefile</itemPath>
         </logicalFolder>
         <itemPath>bullet-src/LinearMath/CMakeLists.txt</itemPath>
@@ -708,6 +621,8 @@
         <itemPath>bullet-src/LinearMath/btAlignedObjectArray.h</itemPath>
         <itemPath>bullet-src/LinearMath/btConvexHull.cpp</itemPath>
         <itemPath>bullet-src/LinearMath/btConvexHull.h</itemPath>
+        <itemPath>bullet-src/LinearMath/btConvexHullComputer.cpp</itemPath>
+        <itemPath>bullet-src/LinearMath/btConvexHullComputer.h</itemPath>
         <itemPath>bullet-src/LinearMath/btDefaultMotionState.h</itemPath>
         <itemPath>bullet-src/LinearMath/btGeometryUtil.cpp</itemPath>
         <itemPath>bullet-src/LinearMath/btGeometryUtil.h</itemPath>
@@ -732,22 +647,10 @@
         <itemPath>bullet-src/LinearMath/btVector3.h</itemPath>
         <itemPath>bullet-src/LinearMath/cmake_install.cmake</itemPath>
       </logicalFolder>
-      <logicalFolder name="MiniCL"
-                     displayName="MiniCL"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
-        <logicalFolder name="CMakeFiles"
-                       displayName="CMakeFiles"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
-          <logicalFolder name="MiniCL.dir"
-                         displayName="MiniCL.dir"
-                         projectFiles="true"
-                         kind="SOURCE_LOGICAL_FOLDER">
-            <logicalFolder name="MiniCLTask"
-                           displayName="MiniCLTask"
-                           projectFiles="true"
-                           kind="SOURCE_LOGICAL_FOLDER">
+      <logicalFolder name="MiniCL" displayName="MiniCL" projectFiles="true">
+        <logicalFolder name="CMakeFiles" displayName="CMakeFiles" projectFiles="true">
+          <logicalFolder name="MiniCL.dir" displayName="MiniCL.dir" projectFiles="true">
+            <logicalFolder name="MiniCLTask" displayName="MiniCLTask" projectFiles="true">
             </logicalFolder>
             <itemPath>bullet-src/MiniCL/CMakeFiles/MiniCL.dir/CXX.includecache</itemPath>
             <itemPath>bullet-src/MiniCL/CMakeFiles/MiniCL.dir/DependInfo.cmake</itemPath>
@@ -763,10 +666,7 @@
           <itemPath>bullet-src/MiniCL/CMakeFiles/CMakeDirectoryInformation.cmake</itemPath>
           <itemPath>bullet-src/MiniCL/CMakeFiles/progress.marks</itemPath>
         </logicalFolder>
-        <logicalFolder name="MiniCLTask"
-                       displayName="MiniCLTask"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="MiniCLTask" displayName="MiniCLTask" projectFiles="true">
           <itemPath>bullet-src/MiniCL/MiniCLTask/MiniCLTask.cpp</itemPath>
           <itemPath>bullet-src/MiniCL/MiniCLTask/MiniCLTask.h</itemPath>
         </logicalFolder>
@@ -781,14 +681,8 @@
         <itemPath>bullet-src/MiniCL/cl_platform.h</itemPath>
         <itemPath>bullet-src/MiniCL/cmake_install.cmake</itemPath>
       </logicalFolder>
-      <logicalFolder name="vectormath"
-                     displayName="vectormath"
-                     projectFiles="true"
-                     kind="SOURCE_LOGICAL_FOLDER">
-        <logicalFolder name="scalar"
-                       displayName="scalar"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+      <logicalFolder name="vectormath" displayName="vectormath" projectFiles="true">
+        <logicalFolder name="scalar" displayName="scalar" projectFiles="true">
           <itemPath>bullet-src/vectormath/scalar/boolInVec.h</itemPath>
           <itemPath>bullet-src/vectormath/scalar/floatInVec.h</itemPath>
           <itemPath>bullet-src/vectormath/scalar/mat_aos.h</itemPath>
@@ -796,10 +690,7 @@
           <itemPath>bullet-src/vectormath/scalar/vec_aos.h</itemPath>
           <itemPath>bullet-src/vectormath/scalar/vectormath_aos.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="sse"
-                       displayName="sse"
-                       projectFiles="true"
-                       kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="sse" displayName="sse" projectFiles="true">
           <itemPath>bullet-src/vectormath/sse/boolInVec.h</itemPath>
           <itemPath>bullet-src/vectormath/sse/floatInVec.h</itemPath>
           <itemPath>bullet-src/vectormath/sse/mat_aos.h</itemPath>
@@ -820,8 +711,7 @@
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
-                   projectFiles="true"
-                   kind="SOURCE_LOGICAL_FOLDER">
+                   projectFiles="true">
     </logicalFolder>
     <logicalFolder name="neural" displayName="neural" projectFiles="true">
       <logicalFolder name="neural" displayName="neural" projectFiles="true">
@@ -853,13 +743,11 @@
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
-                   projectFiles="true"
-                   kind="SOURCE_LOGICAL_FOLDER">
+                   projectFiles="true">
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
-                   projectFiles="true"
-                   kind="SOURCE_LOGICAL_FOLDER">
+                   projectFiles="true">
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="src" displayName="src" projectFiles="true">
@@ -901,13 +789,12 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>2</platform>
       </toolsSet>
       <compileType>
         <ccTool>
-          <developmentMode>5</developmentMode>
+          <commandlineTool>g++</commandlineTool>
           <incDir>
             <pElem>bullet-gl</pElem>
             <pElem>bullet-src</pElem>
@@ -919,7 +806,11 @@
           <commandLine>-fopenmp</commandLine>
         </ccTool>
         <linkerTool>
-          <commandLine>-lGL -lglut -lGLU</commandLine>
+          <linkerLibItems>
+            <linkerOptionItem>-lGL</linkerOptionItem>
+            <linkerOptionItem>-lGLU</linkerOptionItem>
+            <linkerOptionItem>-lglut</linkerOptionItem>
+          </linkerLibItems>
         </linkerTool>
       </compileType>
       <packaging>
@@ -936,17 +827,13 @@
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>2</platform>
       </toolsSet>
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
         </cTool>
-        <ccTool>
-          <developmentMode>5</developmentMode>
-        </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
         </fortranCompilerTool>

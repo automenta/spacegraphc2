@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2480/trunk/src/BulletCollision
+END
+Doxyfile
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2053/trunk/src/BulletCollision/Doxyfile
+END
+premake4.lua
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2418/trunk/src/BulletCollision/premake4.lua
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2358/trunk/src/BulletCollision/CMakeLists.txt
+END

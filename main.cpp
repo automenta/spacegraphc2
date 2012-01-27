@@ -41,9 +41,9 @@ void addRandomBlocks(Spacegraph* s, unsigned num, float minSize, float maxSize) 
         float w = frand(minSize, maxSize);
         float h = frand(minSize, maxSize);
         float d = frand(minSize, maxSize);
-        float r = frand(0, 1.0);
-        float g = frand(0, 1.0);
-        float b = frand(0, 1.0);
+        float r = frand(0.5, 1.0);
+        float g = frand(0, 0.5);
+        float b = frand(0, 0.1);
         s->addCell(new ColorBox(s, w, h, d, btVector3(x, 5.0, y), r, g, b));
     }
 
@@ -54,48 +54,65 @@ void eden() {
 
     s.initPhysics();
 
-//    s.getSpace()->setGravity(btVector3(0, -4.0, 0));
+    s.getSpace()->setGravity(btVector3(0, -4.0, 0));
 //
-//    s.addGround();
+    s.addGround();
 
     //s.addCell(new Humanoid(&s, btVector3(1, 0.5, 0)));
     //s.addCell(new Humanoid(&s, btVector3(-1, 0.5, 0)));
     //s.addCell(new Snake(&s, btVector3(1.7, 1.9, -1.6), 15, 0.2, 0.1));
 
     addWall(&s, 12, 0.5);
-    addRandomBlocks(&s, 8, 0.25, 1.0);
-    addRandomBlocks(&s, 8, 0.05, 0.15);
+    addRandomBlocks(&s, 8, 0.25, 0.4);
+    //addRandomBlocks(&s, 24, 0.15, 0.25);
+    //addRandomBlocks(&s, 48, 0.05, 0.15);
 
 
     //for (unsigned i = 1; i < 2; i++)
-    //{
+    {
         vector<btScalar> legLengths;
         vector<btScalar> legRadii;
         legLengths.push_back(0.2);  legRadii.push_back(0.35);
         legLengths.push_back(0.15);  legRadii.push_back(0.33);
         legLengths.push_back(0.12);  legRadii.push_back(0.31);
         legLengths.push_back(0.11);  legRadii.push_back(0.29);
-        legLengths.push_back(0.10);  legRadii.push_back(0.27);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.10);  legRadii.push_back(0.23);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.2);
 
 
-        Spider* spider = new Spider(&s, 1, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6),48, 86000, 2, 4);
+        Spider* spider = new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 70000, 1, 9);
         s.addCell(spider);
 
-    //}
+    }
+
+    /*
+    for (unsigned i = 0; i < 2; i++)
+    {
+        vector<btScalar> legLengths;
+        vector<btScalar> legRadii;
+        legLengths.push_back(0.6);  legRadii.push_back(0.15);
+        legLengths.push_back(0.6);  legRadii.push_back(0.13);
+
+
+        Spider* spider = new Spider(&s, 1, &legLengths, &legRadii, btVector3(-1.7+3, 0.9, -1.6+i),16, 32000, 1, 9);
+        s.addCell(spider);
+
+    }
+     */
 
     //s.getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
     glutmain(0, NULL, 1920, 1080, "SpaceGraphC", &s);
 
 }
+
 
 void testBrain() {
     Brain* b = new Brain();

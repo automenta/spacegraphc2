@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2472/trunk/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/AMD
+END
+premake4.lua
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2435/trunk/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/AMD/premake4.lua
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/2472/trunk/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/AMD/CMakeLists.txt
+END

@@ -203,6 +203,8 @@ void Renderer::drawOpenGLx(btScalar* m, const btCollisionShape* shape, const btV
 					const int		s=x>>4;
 					const GLubyte	b=180;
 					GLubyte			c=b+((s+t&1)&1)*(255-b);
+
+                                        //GLubyte c = 180;
 					pi[0]=pi[1]=pi[2]=c;pi+=3;
 				}
 			}
