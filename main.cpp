@@ -77,9 +77,9 @@ void eden() {
         legLengths.push_back(0.12);  legRadii.push_back(0.31);
         legLengths.push_back(0.11);  legRadii.push_back(0.29);
         legLengths.push_back(0.10);  legRadii.push_back(0.23);
-//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
@@ -88,7 +88,7 @@ void eden() {
 //        legLengths.push_back(0.09);  legRadii.push_back(0.2);
 
 
-        Spider* spider = new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 70000, 1, 9);
+        Spider* spider = new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 20000, 2, 9);
         s.addCell(spider);
 
     }

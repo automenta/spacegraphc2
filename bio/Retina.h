@@ -107,6 +107,7 @@ public:
     
     unsigned timeScale;
 
+    unsigned cycle;
     unsigned p; //vision frame count
     bool antialias;
     Spacegraph* space;
@@ -131,7 +132,8 @@ public:
         timeScale = 1;
 
         focusAngle = _focusAngle;
-        
+
+        cycle = 0;
         rayCast = new Raycast(world);
 
         pixel = new btVector4*[pixelWidth];

@@ -112,7 +112,13 @@ btVector4 Retina::getColor(CastResult res, btScalar d, float vDistance) {
 }
 
 void Retina::update(double dt) {
-
+    
+    //HACK -- forces simulation to process one frame before vision begins
+    cycle++;    
+    if (cycle == 1)
+        return;
+    
+    
     btTransform tr = eyePart->getWorldTransform();
 
     unsigned input = 0, x;

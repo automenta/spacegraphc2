@@ -284,5 +284,8 @@ private:
 
 };
 
+
+
+
 #endif	/* _SIXDOFMOTOR_H */
 
