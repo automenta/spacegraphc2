@@ -76,10 +76,10 @@ void eden() {
         legLengths.push_back(0.15);  legRadii.push_back(0.33);
         legLengths.push_back(0.12);  legRadii.push_back(0.31);
         legLengths.push_back(0.11);  legRadii.push_back(0.29);
-        legLengths.push_back(0.10);  legRadii.push_back(0.23);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
-        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.10);  legRadii.push_back(0.23);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
+//        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
 //        legLengths.push_back(0.09);  legRadii.push_back(0.25);
@@ -88,7 +88,7 @@ void eden() {
 //        legLengths.push_back(0.09);  legRadii.push_back(0.2);
 
 
-        Spider* spider = new Spider(&s, 3, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 20000, 2, 9);
+        Spider* spider = new Spider(&s, 2, &legLengths, &legRadii, btVector3(-1.7, 0.9, -1.6), 16, 70000, 2, 9);
         s.addCell(spider);
 
     }
@@ -109,7 +109,7 @@ void eden() {
      */
 
     //s.getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
-    glutmain(0, NULL, 1920, 1080, "SpaceGraphC", &s);
+    glutmain(0, NULL, 1400, 800, "SpaceGraphC", &s);
 
 }
 
@@ -191,7 +191,7 @@ void testBrain() {
 
 void initMP() {
 
-    omp_set_num_threads(4);
+    omp_set_num_threads(5);
 }
 
 int main(int argc, char* argv[]) {

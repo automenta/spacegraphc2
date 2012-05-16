@@ -963,6 +963,10 @@ inline void		btDbvt::rayTestInternal(	const btDbvtNode* root,
 		do	
 		{
 			const btDbvtNode*	node=stack[--depth];
+
+			//SETH CRITTERGOD
+			if (node == NULL) continue;
+
 			bounds[0] = node->volume.Mins()-aabbMax;
 			bounds[1] = node->volume.Maxs()-aabbMin;
 			btScalar tmin=1.f,lambda_min=0.f;

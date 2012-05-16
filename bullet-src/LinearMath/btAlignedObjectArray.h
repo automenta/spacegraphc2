@@ -313,6 +313,7 @@ protected:
 				}
 		};
 	
+
 		template <typename L>
 		void quickSortInternal(const L& CompareFunc,int lo, int hi)
 		{

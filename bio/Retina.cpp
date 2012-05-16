@@ -115,7 +115,7 @@ void Retina::update(double dt) {
     
     //HACK -- forces simulation to process one frame before vision begins
     cycle++;    
-    if (cycle == 1)
+    if (cycle <= 2)
         return;
     
     
